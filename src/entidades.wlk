@@ -35,23 +35,31 @@ object goku {
 
 	}
 	
+	method disparar(){
+		const bola = new BolaDeEnergia(position = position.right(1))
+		game.addVisual(bola)
+		bola.desplazarse()
+	}
+	
 	method recibirAtaque(cantidad){
 		
 		vida -= cantidad
 	}
 	
+	
+	
 	method hacerDanio(cant){
 		
-		if (accion == "frente"){
+		if (accion == "frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
 			game.getObjectsIn(position.down(1)).first().recibirDanio(cant)
 		}
-		else if (accion == "atras"){
+		else if (accion == "atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
 			game.getObjectsIn(position.up(1)).first().recibirDanio(cant)
 		}
-		else if (accion == "derecha"){
+		else if (accion == "derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
 			game.getObjectsIn(position.right(1)).first().recibirDanio(cant)
 		}
-		else if (accion == "izquierda"){
+		else if (accion == "izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
 			game.getObjectsIn(position.left(1)).first().recibirDanio(cant)
 		}
 		
@@ -62,8 +70,8 @@ object goku {
 		self.hacerDanio(20)
 		accion = direccion + "Golpe1"
 		game.schedule(75, {accion = direccion + "Golpe2"})
-		game.schedule(150, {accion = direccion + "golpe3"})
-		game.schedule(225, {accion = direccion + "golpe4"})
+		game.schedule(150, {accion = direccion + "Golpe3"})
+		game.schedule(225, {accion = direccion + "Golpe4"})
 		game.schedule(300, {accion = direccion})
 	}
 	
@@ -97,6 +105,8 @@ class Enemigo{
 	
 	method image() = "assets/frente.png"
 	
+	method estaVivo() = vida > 0
+	
 	method recibirDanio(cant){
 		vida -= cant
 		
@@ -125,7 +135,7 @@ class Enemigo{
 			position = position.down(1)
 		}
 		
-	method jugadorCerca() = goku.position().x()-self.position().x().abs() <= 4 and  goku.position().y()-self.position().y().abs() <= 4
+	method jugadorCerca() = goku.position().x()-self.position().x().abs() <= 4 and  goku.position().y()-self.position().y().abs() <= 4 and goku.position().x()-self.position().x() >= -4 and  goku.position().y()-self.position().y() >= -4
 	
 	method movimientoEnemigo(){
 		

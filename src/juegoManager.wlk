@@ -2,11 +2,11 @@ import wollok.game.*
 import entidades.*
 
 object juego{
-	
-	const enemigo = new Enemigo()
+
+	var enemigo = new Enemigo()
 	
 	method iniciar() {
-
+		
 		game.height(15)
 		game.width(15)
 		game.title("The Legend Of SuperSaiyan")
@@ -28,7 +28,17 @@ object juego{
 		keyboard.left().onPressDo{ goku.izquierda()}
 		keyboard.right().onPressDo{ goku.derecha()}
 		keyboard.q().onPressDo{ goku.golpear() }
+		keyboard.w().onPressDo{ goku.disparar() }
 		 
 	}
+	
+	method eliminarEnemigoSiMurio(){ 
+		if (not enemigo.estaVivo()){
+			game.removeVisual(enemigo)
+			enemigo = null
+		}
+	}
+	
+	
 	
 }
