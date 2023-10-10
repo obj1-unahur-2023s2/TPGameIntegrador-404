@@ -32,11 +32,9 @@ object juego{
 		 
 	}
 	
-	method eliminarEnemigoSiMurio(){ 
-		if (not enemigo.estaVivo()){
-			game.removeVisual(enemigo)
-			enemigo = null
-		}
+	method eliminarEnemigo(){ 
+		game.removeVisual(enemigo)
+		enemigo = null
 	}
 	
 	

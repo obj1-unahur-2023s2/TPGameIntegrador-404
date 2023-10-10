@@ -22,9 +22,9 @@ class BolaDeEnergia {
 	method hacerDanio(){
 		if ( not game.getObjectsIn(position).isEmpty() and game.getObjectsIn(position).first() != self){
 			game.removeTickEvent("movimientoBola")
-			game.getObjectsIn(position).first().recibirDanio(10)
+			game.getObjectsIn(position).first().recibirAtaque(10)
+			game.getObjectsIn(position).first().morir()
 			game.removeVisual(self)
-			juego.eliminarEnemigoSiMurio()
 		}
 	}
 	

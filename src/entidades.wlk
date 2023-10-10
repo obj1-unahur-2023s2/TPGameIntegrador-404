@@ -1,21 +1,48 @@
 import wollok.game.*
 import ataques.*
+import juegoManager.*
 
 
-class Obstaculos{
+class Entidades{
 	
-	
+	// aca se pondria el codigo que inpide que todas las entidades se superpongan.
+	// esta clase se usaria mas que nada para los obstaculos como arboles, casas, piedras, etc.
 	
 }
 
-object goku {
+class EntidadesVivas inherits Entidades{
 	
-	var property vida = 100
+	var vida = 100
+	var accion = "Frente"
+	var estaAturdido = false
+	method estaVivo() = vida > 0
 	
-	var accion = "frente"
+	method recibirAtaque(cant){
+		vida -= cant
+		
+		game.say(self, vida.toString())
+	}
+		
+	method puedeMoverse(){
+		return 
+			not estaAturdido
+			}
+	
+	method morir(){ 
+		if (not self.estaVivo()){
+			
+			estaAturdido = true
+			accion = "Muere1"
+			game.schedule(200, {accion = "Muere2"})
+			game.schedule(400, {accion = "Muere3"})
+			game.schedule(2000, {juego.eliminarEnemigo()})
+		}
+	}
+}
+
+object goku inherits EntidadesVivas{
 	
 	var property position = game.center()
-	
 	method image() = "assets/" + accion + ".png"
 	
 	method golpear(){
@@ -41,26 +68,21 @@ object goku {
 		bola.desplazarse()
 	}
 	
-	method recibirAtaque(cantidad){
-		
-		vida -= cantidad
-	}
-	
 	
 	
 	method hacerDanio(cant){
 		
 		if (accion == "frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
-			game.getObjectsIn(position.down(1)).first().recibirDanio(cant)
+			game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
 		}
 		else if (accion == "atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
-			game.getObjectsIn(position.up(1)).first().recibirDanio(cant)
+			game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
 		}
 		else if (accion == "derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
-			game.getObjectsIn(position.right(1)).first().recibirDanio(cant)
+			game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
 		}
 		else if (accion == "izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
-			game.getObjectsIn(position.left(1)).first().recibirDanio(cant)
+			game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
 		}
 		
 	}
@@ -97,45 +119,45 @@ object goku {
 	
 }
 
-class Enemigo{
-	
-	var vida = 100
+class Enemigo inherits EntidadesVivas{
 	
 	var property position = game.at(4,4)
-	
-	method image() = "assets/frente.png"
-	
-	method estaVivo() = vida > 0
-	
-	method recibirDanio(cant){
-		vida -= cant
-		
-		game.say(self, vida.toString())
-	}
+	method image() = "assets/enemigos/enemigo" + accion + ".png"
 	
 	method movimiento() =
 		
-		if (goku.position().x() > self.position().x() and self.jugadorCerca()){
+		if (goku.position().x() > self.position().x() and self.puedeMoverse()){
 			
 			 position = position.right(1)
+			 accion = "Derecha"
 			 
 		}
-		else if (goku.position().x() < self.position().x() and self.jugadorCerca()){
+		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){
 			
 			position = position.left(1)
+			accion = "Izquierda"
 			
 		}
-		else if (goku.position().y() > self.position().y() and self.jugadorCerca()){
+		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
 			
 			position = position.up(1)
+			accion = "Atras"
 			
 		}
-		else if (goku.position().y() < self.position().y() and self.jugadorCerca()){
+		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
 			
 			position = position.down(1)
+			accion = "Frente"
 		}
 		
-	method jugadorCerca() = goku.position().x()-self.position().x().abs() <= 4 and  goku.position().y()-self.position().y().abs() <= 4 and goku.position().x()-self.position().x() >= -4 and  goku.position().y()-self.position().y() >= -4
+	override method puedeMoverse(){
+		return 
+			goku.position().x()-self.position().x().abs() <= 4 and
+			goku.position().y()-self.position().y().abs() <= 4 and
+			goku.position().x()-self.position().x() >= -4 and
+			goku.position().y()-self.position().y() >= -4 and
+			super()
+		}
 	
 	method movimientoEnemigo(){
 		
