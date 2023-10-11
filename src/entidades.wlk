@@ -45,6 +45,22 @@ object goku inherits EntidadesVivas{
 	var property position = game.center()
 	method image() = "assets/" + accion + ".png"
 	
+	method matar(){
+
+        if (accion == "frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
+            game.getObjectsIn(position.down(1)).first().morir()
+        }
+        else if (accion == "atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
+            game.getObjectsIn(position.up(1)).first().morir()
+        }
+        else if (accion == "derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
+            game.getObjectsIn(position.right(1)).first().morir()
+        }
+        else if (accion == "izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
+            game.getObjectsIn(position.left(1)).first().morir()
+        }
+
+    }
 	method golpear(){
 		
 		if (accion == "frente"){
@@ -90,6 +106,7 @@ object goku inherits EntidadesVivas{
 	method golpear(direccion){
 		
 		self.hacerDanio(20)
+		self.matar()
 		accion = direccion + "Golpe1"
 		game.schedule(75, {accion = direccion + "Golpe2"})
 		game.schedule(150, {accion = direccion + "Golpe3"})
@@ -151,13 +168,17 @@ class Enemigo inherits EntidadesVivas{
 		}
 		
 	override method puedeMoverse(){
-		return 
-			goku.position().x()-self.position().x().abs() <= 4 and
-			goku.position().y()-self.position().y().abs() <= 4 and
-			goku.position().x()-self.position().x() >= -4 and
-			goku.position().y()-self.position().y() >= -4 and
-			super()
-		}
+        return 
+            goku.position().x()-self.position().x().abs() <= 4 and
+            goku.position().y()-self.position().y().abs() <= 4 and
+            goku.position().x()-self.position().x() >= -4 and
+            goku.position().y()-self.position().y() >= -4 and
+            goku.position().x()-self.position().x().abs() != 1 and
+            goku.position().y()-self.position().y().abs() != 1 and
+            goku.position().x()-self.position().x().abs() != -1 and
+            goku.position().y()-self.position().y().abs() != -1 and
+            super()
+        }
 	
 	method movimientoEnemigo(){
 		
