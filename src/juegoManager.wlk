@@ -3,7 +3,7 @@ import entidades.*
 
 object juego{
 
-	var enemigo = new Enemigo()
+	var enemigo = new Enemigo(position = game.at(4,4))
 	
 	method iniciar() {
 		
