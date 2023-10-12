@@ -3,19 +3,22 @@ import ataques.*
 import juegoManager.*
 
 
-class Entidades{
+class Obstaculos{
 	
-	// aca se pondria el codigo que inpide que todas las entidades se superpongan.
-	// esta clase se usaria mas que nada para los obstaculos como arboles, casas, piedras, etc.
+	const position
+	
+	method recibirAtaque() {}
 	
 }
 
-class EntidadesVivas inherits Entidades{
+class EntidadesVivas{
 	
+	var position
 	var vida = 100
 	var accion = "Frente"
 	var estaAturdido = false
 	method estaVivo() = vida > 0
+	method position() = position
 	
 	method recibirAtaque(cant){
 		vida -= cant
@@ -26,40 +29,111 @@ class EntidadesVivas inherits Entidades{
 	method puedeMoverse(){
 		return 
 			not estaAturdido
-			}
-	
-	method morir(){ 
-		if (not self.estaVivo()){
-			
-			estaAturdido = true
-			accion = "Muere1"
-			game.schedule(200, {accion = "Muere2"})
-			game.schedule(400, {accion = "Muere3"})
-			game.schedule(2000, {juego.eliminarEnemigo()})
-		}
 	}
+	
+	
+	method avanzar() {
+		
+		if (game.getObjectsIn(position.up(1)).isEmpty()){
+			position = position.up(1)
+		}
+		accion = "Atras"
+	}
+	
+	method retroceder() {
+		
+		if (game.getObjectsIn(position.down(1)).isEmpty()){
+			position = position.down(1)
+		}
+		accion = "Frente"
+	}
+	
+	method derecha() {
+		
+		if (game.getObjectsIn(position.right(1)).isEmpty()){
+			position = position.right(1)
+		}
+		accion = "Derecha"
+	}
+	
+	method izquierda() {
+		
+		if (game.getObjectsIn(position.left(1)).isEmpty()){
+			position = position.left(1)
+		}
+		accion = "Izquierda"
+	}
+	
+	method golpear(direccion){
+		
+		accion = direccion + "Golpe1"
+		game.schedule(100, {accion = direccion + "Golpe2"})
+		game.schedule(200, {accion = direccion + "Golpe3"})
+		game.schedule(300, {accion = direccion + "Golpe4"})
+		game.schedule(400, {accion = direccion})
+		
+	}
+	
+	method matar(){
+
+        if (accion == "frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
+            game.getObjectsIn(position.down(1)).first().morir()
+        }
+        else if (accion == "atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
+            game.getObjectsIn(position.up(1)).first().morir()
+        }
+        else if (accion == "derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
+            game.getObjectsIn(position.right(1)).first().morir()
+        }
+        else if (accion == "izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
+            game.getObjectsIn(position.left(1)).first().morir()
+        }
+
+    }
 }
 
-object goku inherits EntidadesVivas{
+object goku inherits EntidadesVivas(position = game.center()){
 	
-	var property position = game.center()
 	method image() = "assets/" + accion + ".png"
 	
 	method golpear(){
 		
-		if (accion == "frente"){
-			self.golpear("frente")
+		if (accion == "Frente"){
+			self.golpear("Frente")
 		}
-		else if (accion == "atras"){
-			self.golpear("atras")
+		else if (accion == "Atras"){
+			self.golpear("Atras")
 		}
-		else if (accion == "derecha"){
-			self.golpear("derecha")
+		else if (accion == "Derecha"){
+			self.golpear("Derecha")
 		}
-		else if (accion == "izquierda"){
-			self.golpear("izquierda")
+		else if (accion == "Izquierda"){
+			self.golpear("Izquierda")
 		}
 
+	}
+	
+	method hacerDanio(cant){
+		
+		if (accion == "Frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
+			game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
+		}
+		else if (accion == "Atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
+			game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
+		}
+		else if (accion == "Derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
+			game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
+		}
+		else if (accion == "Izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
+			game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
+		}
+	}
+	
+	override method golpear(direccion){
+		
+		self.hacerDanio(20)
+		self.matar()
+		super(direccion)
 	}
 	
 	method disparar(){
@@ -68,88 +142,56 @@ object goku inherits EntidadesVivas{
 		bola.desplazarse()
 	}
 	
-	
-	
-	method hacerDanio(cant){
-		
-		if (accion == "frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
-			game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
-		}
-		else if (accion == "atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
-			game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
-		}
-		else if (accion == "derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
-			game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
-		}
-		else if (accion == "izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
-			game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
-		}
-		
+	method morir(){ 
+		//por ahora no hace nada, se hara cuando se haga la pantalla de game over
 	}
 	
-	method golpear(direccion){
-		
-		self.hacerDanio(20)
-		accion = direccion + "Golpe1"
-		game.schedule(75, {accion = direccion + "Golpe2"})
-		game.schedule(150, {accion = direccion + "Golpe3"})
-		game.schedule(225, {accion = direccion + "Golpe4"})
-		game.schedule(300, {accion = direccion})
-	}
-	
-	method avanzar() {
-		position = position.up(1)
-		accion = "atras"
-	}
-	
-	method retroceder() {
-		position = position.down(1)
-		accion = "frente"
-	}
-	
-	method derecha() {
-		position = position.right(1)
-		accion = "derecha"
-	}
-	
-	method izquierda() {
-		position = position.left(1)
-		accion = "izquierda"
-	}
 	
 }
 
-class Enemigo inherits EntidadesVivas{
+class Enemigo inherits EntidadesVivas(position = game.at(4,4)){
 	
-	var property position = game.at(4,4)
 	method image() = "assets/enemigos/enemigo" + accion + ".png"
 	
 	method movimiento() =
 		
 		if (goku.position().x() > self.position().x() and self.puedeMoverse()){
-			
-			 position = position.right(1)
-			 accion = "Derecha"
-			 
+			 self.derecha()
+			 self.hacerDanio(5,"Derecha")
 		}
 		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){
-			
-			position = position.left(1)
-			accion = "Izquierda"
-			
+			self.izquierda()
+			self.hacerDanio(5,"Izquierda")
 		}
 		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
-			
-			position = position.up(1)
-			accion = "Atras"
-			
+			self.avanzar()
+			self.hacerDanio(5,"Atras")
 		}
 		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
-			
-			position = position.down(1)
-			accion = "Frente"
+			self.retroceder()
+			self.hacerDanio(5,"Frente")
 		}
 		
+	method hacerDanio(cant, direccion){
+		
+		if (accion == "Frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
+			game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
+			self.golpear(direccion)
+		}
+		else if (accion == "Atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
+			game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
+			self.golpear(direccion)
+		}
+		else if (accion == "Derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
+			game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
+			self.golpear(direccion)
+		}
+		else if (accion == "Izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
+			game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
+			self.golpear(direccion)
+		}
+	}
+	
 	override method puedeMoverse(){
 		return 
 			goku.position().x()-self.position().x().abs() <= 4 and
@@ -162,6 +204,17 @@ class Enemigo inherits EntidadesVivas{
 	method movimientoEnemigo(){
 		
 		game.onTick(500, "movimientoEnemgio",{ => self.movimiento() })
+	}
+	
+	method morir(){ 
+		if (not self.estaVivo()){
+			
+			estaAturdido = true
+			accion = "Muere1"
+			game.schedule(200, {accion = "Muere2"})
+			game.schedule(400, {accion = "Muere3"})
+			game.schedule(2000, {juego.eliminarEnemigo()})  //cambiar para que tambien funcione con cualquier enemigo
+		}
 	}
 	
 }

@@ -35,8 +35,7 @@ object juego{
 	method eliminarEnemigo(){ 
 		game.removeVisual(enemigo)
 		enemigo = null
-	}
-	
+	}  // se debe modificar para que funcione con diferentes enemigos
 	
 	
 }
