@@ -14,9 +14,9 @@ class BolaDeEnergia {
 	}
 	
 	method moverseDerecha(){
-		
-		position = position.right(1)
 		self.hacerDanio()
+		position = position.right(1)
+		
 	}
 	
 	method hacerDanio(){
@@ -29,3 +29,6 @@ class BolaDeEnergia {
 	}
 	
 }
+
+
+

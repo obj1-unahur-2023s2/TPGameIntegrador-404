@@ -95,7 +95,7 @@ class EntidadesVivas{
 object goku inherits EntidadesVivas(position = game.center()){
 	
 	method image() = "assets/" + accion + ".png"
-	
+    
 	method golpear(){
 		
 		if (accion == "Frente"){
@@ -146,7 +146,6 @@ object goku inherits EntidadesVivas(position = game.center()){
 		//por ahora no hace nada, se hara cuando se haga la pantalla de game over
 	}
 	
-	
 }
 
 class Enemigo inherits EntidadesVivas(position = game.at(4,4)){
@@ -191,15 +190,6 @@ class Enemigo inherits EntidadesVivas(position = game.at(4,4)){
 			self.golpear(direccion)
 		}
 	}
-	
-	override method puedeMoverse(){
-		return 
-			goku.position().x()-self.position().x().abs() <= 4 and
-			goku.position().y()-self.position().y().abs() <= 4 and
-			goku.position().x()-self.position().x() >= -4 and
-			goku.position().y()-self.position().y() >= -4 and
-			super()
-		}
 	
 	method movimientoEnemigo(){
 		
