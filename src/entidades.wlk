@@ -3,19 +3,7 @@ import ataques.*
 import juegoManager.*
 
 
-object barraDeVida{
-	var numero = goku.vida()
-	
-	const position = game.at(0.5,14)
-	
-	method position()= position
-	method image() = if (goku.vida() >= 80)                          "barraDeVidaLlena.png"
-				else if ((goku.vida() < 80) and (goku.vida()>=60))   "barraDeVida80.png"
-				else if ((goku.vida() < 60) and (goku.vida() >=40))  "barraDeVida60.png"
-				else if ((goku.vida() < 40) and (goku.vida() >=20))  "barraDeVida40.png"
-				else if ((goku.vida() < 20) and (goku.vida() >=1))   "barraDeVida20.png"
-				else if (goku.vida() >= 0)          				 "barraDeVida0.png"
-}
+
 
 class Obstaculos{
 	
@@ -36,8 +24,6 @@ class EntidadesVivas{
 	
 	method recibirAtaque(cant){
 		vida -= cant
-		
-		game.say(self, vida.toString())  //temporal hasta tener barra de vida
 	}
 		
 	method puedeMoverse() = not estaAturdido and self.estaVivo()

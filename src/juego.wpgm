@@ -4,7 +4,7 @@ import wollok.game.*
 
 program abc {
 	
-	game.cellSize(70)
+	game.cellSize(60)
 	juego.iniciar()
 	game.start()
 }

@@ -1,5 +1,6 @@
 import wollok.game.*
 import entidades.*
+import indicadores.*
 
 object juego{
 
@@ -7,8 +8,8 @@ object juego{
 	
 	method iniciar() {
 		
-		game.height(15)
-		game.width(15)
+		game.height(16)
+		game.width(22)
 		game.title("The Legend Of SuperSaiyan")
 		
 		self.agregarVisuales()
