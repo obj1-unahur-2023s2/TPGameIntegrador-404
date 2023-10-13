@@ -20,7 +20,10 @@ object juego{
 	method agregarVisuales(){
 		game.addVisual(goku)
 		game.addVisual(enemigo)
-	}
+		game.addVisual(barraDeVida)
+		}
+		
+	
 	
 	method configurarTeclas() {
 		keyboard.up().onPressDo{ goku.avanzar()}

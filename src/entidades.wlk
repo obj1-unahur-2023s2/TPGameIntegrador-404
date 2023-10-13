@@ -3,6 +3,20 @@ import ataques.*
 import juegoManager.*
 
 
+object barraDeVida{
+	var numero = goku.vida()
+	
+	const position = game.at(0.5,14)
+	
+	method position()= position
+	method image() = if (goku.vida() >= 80)                          "barraDeVidaLlena.png"
+				else if ((goku.vida() < 80) and (goku.vida()>=60))   "barraDeVida80.png"
+				else if ((goku.vida() < 60) and (goku.vida() >=40))  "barraDeVida60.png"
+				else if ((goku.vida() < 40) and (goku.vida() >=20))  "barraDeVida40.png"
+				else if ((goku.vida() < 20) and (goku.vida() >=1))   "barraDeVida20.png"
+				else if (goku.vida() >= 0)          				 "barraDeVida0.png"
+}
+
 class Obstaculos{
 	
 	const position
@@ -80,7 +94,7 @@ class EntidadesVivas{
 object goku inherits EntidadesVivas(position = game.center()){
 	
 	method image() = "assets/" + accion + ".png"
-    
+    method vida() = vida
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
 		
 		if (accion == "Frente"){
