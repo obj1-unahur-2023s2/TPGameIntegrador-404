@@ -79,6 +79,11 @@ class EntidadesVivas{
 
 object goku inherits EntidadesVivas(position = game.center()){
 	
+	var energia= 100
+	method energia()= energia
+	method usarBolaDeFuego(){
+		energia= energia - 10
+	}
 	method image() = "assets/" + accion + ".png"
     method vida() = vida
     method accion() = accion
@@ -127,9 +132,14 @@ object goku inherits EntidadesVivas(position = game.center()){
     }
 	
 	method disparar(){
-		const bola = new BolaDeEnergia(position = position)
-		game.addVisual(bola)
-		bola.desplazarse()
+		if(self.energia() >=0){
+			const bola = new BolaDeEnergia(position = position)
+			game.addVisual(bola)
+			bola.desplazarse()
+			self.usarBolaDeFuego()
+			}
+		else{ game.say(self,"No tenes energia suficiente")}
+		
 	}
 	
 	method usarBengalaSolar(){

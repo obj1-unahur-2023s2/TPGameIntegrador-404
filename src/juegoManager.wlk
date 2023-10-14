@@ -23,6 +23,7 @@ object juego{
 		game.addVisual(goku)
 		game.addVisual(enemigo)
 		game.addVisual(barraDeVida)
+		game.addVisual(barraDeEnergia)
 		}
 		
 	
