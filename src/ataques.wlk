@@ -4,9 +4,7 @@ import juegoManager.*
 
 class BolaDeEnergia {
 	var position
-	
-	method image() = "bolaDeEnergia.png"
-	
+	method image() = "ataques/bolaDeEnergia.png"
 	method position() = position
 	
 	method desplazarse(){
@@ -42,7 +40,7 @@ class BolaDeEnergia {
 	}
 	
 	method hacerDanio(){
-		if ( not game.getObjectsIn(position).isEmpty() and game.getObjectsIn(position).first() != self){
+		if ( not game.getObjectsIn(position).isEmpty() and self.estaSobreUnEnemigo()){
 			game.removeTickEvent("movimientoBola")
 			game.getObjectsIn(position).first().recibirAtaque(10)
 			game.getObjectsIn(position).first().morir()
@@ -50,6 +48,21 @@ class BolaDeEnergia {
 		}
 	}
 	
+	method estaSobreUnEnemigo()= juego.enemigos().any( {e => game.getObjectsIn(position).first() == e})
+}
+
+object bengalaSolar{
+	
+	method position() = goku.position()
+	
+	method stunear(){
+		if ( not self.enemigosAlRededor().isEmpty()){
+			self.enemigosAlRededor().first().serAturdido(2000)
+		}
+	}
+	method enemigosAlRededor() = 
+		game.getObjectsIn(self.position().down(1)) + game.getObjectsIn(self.position().up(1)) + game.getObjectsIn(self.position().right(1)) + game.getObjectsIn(self.position().left(1))
+		
 }
 
 

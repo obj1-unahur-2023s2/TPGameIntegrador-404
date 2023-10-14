@@ -3,8 +3,9 @@ import entidades.*
 import indicadores.*
 
 object juego{
-
+	
 	var enemigo = new Enemigo(position = game.at(4,4))
+	const property enemigos = [enemigo]
 	
 	method iniciar() {
 		
@@ -33,6 +34,7 @@ object juego{
 		keyboard.right().onPressDo{ goku.derecha()}
 		keyboard.q().onPressDo{ goku.golpear() }
 		keyboard.w().onPressDo{ goku.disparar() }
+		keyboard.e().onPressDo{ goku.usarBengalaSolar() }
 		 
 	}
 	
@@ -40,6 +42,5 @@ object juego{
 		game.removeVisual(enemigo)
 		enemigo = null
 	}  // se debe modificar para que funcione con diferentes enemigos
-	
 	
 }

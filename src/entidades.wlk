@@ -127,21 +127,14 @@ object goku inherits EntidadesVivas(position = game.center()){
     }
 	
 	method disparar(){
-		if (accion == "Frente"){
-			const bola = new BolaDeEnergia(position = position.down(1))
-		}
-		else if (accion == "Atras"){
-			const bola = new BolaDeEnergia(position = position.up(1))
-		}
-		else if (accion == "Derecha"){
-			const bola = new BolaDeEnergia(position = position.right(1))
-		}
-		else if (accion == "Izquierda"){
-			const bola = new BolaDeEnergia(position = position.left(1))
-		}
-		
+		const bola = new BolaDeEnergia(position = position)
 		game.addVisual(bola)
 		bola.desplazarse()
+	}
+	
+	method usarBengalaSolar(){
+		
+		bengalaSolar.stunear()
 	}
 	
 	method morir(){ 
