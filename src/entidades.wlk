@@ -81,6 +81,7 @@ object goku inherits EntidadesVivas(position = game.center()){
 	
 	method image() = "assets/" + accion + ".png"
     method vida() = vida
+    method accion() = accion
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
 		
 		if (accion == "Frente"){
@@ -126,7 +127,19 @@ object goku inherits EntidadesVivas(position = game.center()){
     }
 	
 	method disparar(){
-		const bola = new BolaDeEnergia(position = position.right(1))  //en esta parte tenemos que hacer que el personaje dispare hacia la direccion que esta mirando
+		if (accion == "Frente"){
+			const bola = new BolaDeEnergia(position = position.down(1))
+		}
+		else if (accion == "Atras"){
+			const bola = new BolaDeEnergia(position = position.up(1))
+		}
+		else if (accion == "Derecha"){
+			const bola = new BolaDeEnergia(position = position.right(1))
+		}
+		else if (accion == "Izquierda"){
+			const bola = new BolaDeEnergia(position = position.left(1))
+		}
+		
 		game.addVisual(bola)
 		bola.desplazarse()
 	}
