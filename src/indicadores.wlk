@@ -3,9 +3,7 @@ import entidades.*
 
 object barraDeVida{
 	
-	const position = game.at(0.5,15)
-	
-	method position()= position
+	method position()= game.at(0.5,15)
 	method image() = 
 		if (goku.vida() >= 80)                          	 "indicadores/barraDeVidaLlena.png"
 		else if ((goku.vida() < 80) and (goku.vida()>=60))   "indicadores/barraDeVida80.png"
@@ -16,9 +14,8 @@ object barraDeVida{
 }
 
 object barraDeEnergia{
-	const position = game.at(3,15)
-	
-	method position()= position
+
+	method position()= game.at(3,15)
 	method image() =
 	if (goku.energia() >= 80)                          	 "indicadores/barraDeEnergiaLlena.png"
 		else if ((goku.energia()< 80) and (goku.energia()>=60))   "indicadores/barraDeEnergia80.png"

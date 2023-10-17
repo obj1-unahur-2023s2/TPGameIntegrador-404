@@ -1,7 +1,7 @@
 import wollok.game.*
-import ataques.*
+import habilidades.*
 import juegoManager.*
-
+import animaciones.*
 
 
 
@@ -10,6 +10,8 @@ class Obstaculos{
 	const position
 	
 	method recibirAtaque() {}
+	method serAturdido(tiempo) {}
+	method position() = position
 	
 }
 
@@ -17,7 +19,7 @@ class EntidadesVivas{
 	
 	var position
 	var vida = 100
-	var accion = "Frente"
+	var property accion = "Frente"
 	var estaAturdido = false
 	method estaVivo() = vida > 0
 	method position() = position
@@ -61,15 +63,7 @@ class EntidadesVivas{
 		accion = "Izquierda"
 	}
 	
-	method golpear(direccion){
-		//esto seria mas que nada la animacion del golpe, se puede cambiar el nombre
-		accion = direccion + "Golpe1"
-		game.schedule(100, {accion = direccion + "Golpe2"})
-		game.schedule(200, {accion = direccion + "Golpe3"})
-		game.schedule(300, {accion = direccion + "Golpe4"})
-		game.schedule(400, {accion = direccion})
-		
-	}
+	
     
     method serAturdido(tiempo){
     	estaAturdido=true
@@ -84,22 +78,22 @@ object goku inherits EntidadesVivas(position = game.center()){
 	method usarBolaDeFuego(){
 		energia= energia - 10
 	}
-	method image() = "assets/" + accion + ".png"
+	method image() = "assets/jugador/" + accion + ".png"
     method vida() = vida
-    method accion() = accion
+    
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
 		
 		if (accion == "Frente"){
-			self.golpear("Frente")
+			self.golpe("Frente")
 		}
 		else if (accion == "Atras"){
-			self.golpear("Atras")
+			self.golpe("Atras")
 		}
 		else if (accion == "Derecha"){
-			self.golpear("Derecha")
+			self.golpe("Derecha")
 		}
 		else if (accion == "Izquierda"){
-			self.golpear("Izquierda")
+			self.golpe("Izquierda")
 		}
 
 	}
@@ -125,20 +119,20 @@ object goku inherits EntidadesVivas(position = game.center()){
         }
     }
 
-    override method golpear(direccion){ //animacion de golpear inplementada junto con el daño
+    method golpe(direccion){ //animacion de golpear inplementada junto con el daño
 
         self.hacerDanio(20)
-        super(direccion)
+        animaciones.golpear(self,direccion)
     }
 	
-	method disparar(){
+	method usarBolaDeEnergia(){
 		if(self.energia() >=0){
 			const bola = new BolaDeEnergia(position = position)
 			game.addVisual(bola)
 			bola.desplazarse()
 			self.usarBolaDeFuego()
 			}
-		else{ game.say(self,"No tenes energia suficiente")}
+		else{ game.say(self,"No me queda energia suficiente")}
 		
 	}
 	
@@ -181,19 +175,19 @@ class Enemigo inherits EntidadesVivas{
 		
 		if (accion == "Frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
 			game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
-			self.golpear(direccion)
+			animaciones.golpear(self,direccion)
 		}
 		else if (accion == "Atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
 			game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
-			self.golpear(direccion)
+			animaciones.golpear(self,direccion)
 		}
 		else if (accion == "Derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
 			game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
-			self.golpear(direccion)
+			animaciones.golpear(self,direccion)
 		}
 		else if (accion == "Izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
 			game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
-			self.golpear(direccion)
+			animaciones.golpear(self,direccion)
 		}
 	}
 	
@@ -213,7 +207,7 @@ class Enemigo inherits EntidadesVivas{
 	
 	method morir(){ 
 		if (not self.estaVivo()){
-			self.serAturdido(2001)
+			self.serAturdido(2200)
 			accion = "Muere1"
 			game.schedule(200, {accion = "Muere2"})
 			game.schedule(400, {accion = "Muere3"})

@@ -34,7 +34,7 @@ object juego{
 		keyboard.left().onPressDo{ goku.izquierda()}
 		keyboard.right().onPressDo{ goku.derecha()}
 		keyboard.q().onPressDo{ goku.golpear() }
-		keyboard.w().onPressDo{ goku.disparar() }
+		keyboard.w().onPressDo{ goku.usarBolaDeEnergia() }
 		keyboard.e().onPressDo{ goku.usarBengalaSolar() }
 		 
 	}

@@ -1,6 +1,7 @@
 import wollok.game.*
 import entidades.*
 import juegoManager.*
+import animaciones.*
 
 class BolaDeEnergia {
 	var position
@@ -9,15 +10,19 @@ class BolaDeEnergia {
 	
 	method desplazarse(){
 		if (goku.accion() == "Frente"){
+			animaciones.disparar(goku, "Frente")
 			game.onTick(250, "movimientoBola", {self.moverseFrente()})
 		}
 		else if (goku.accion() == "Atras"){
+			animaciones.disparar(goku,"Atras")
 			game.onTick(250, "movimientoBola", {self.moverseAtras()})
 		}
 		else if (goku.accion() == "Derecha"){
+			animaciones.disparar(goku,"Derecha")
 			game.onTick(250, "movimientoBola", {self.moverseDerecha()})
 		}
 		else if (goku.accion() == "Izquierda"){
+			animaciones.disparar(goku,"Izquierda")
 			game.onTick(250, "movimientoBola", {self.moverseIzquierda()})
 		}
 	}
