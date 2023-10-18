@@ -12,6 +12,7 @@ object juego{
 		game.height(16)
 		game.width(22)
 		game.title("The Legend Of SuperSaiyan")
+		game.boardGround("assets/mapaNamek.png")
 		
 		self.agregarVisuales()
 		self.configurarTeclas()
