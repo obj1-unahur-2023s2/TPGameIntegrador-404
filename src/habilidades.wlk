@@ -47,7 +47,7 @@ class BolaDeEnergia {
 	method hacerDanio(){
 		if ( not game.getObjectsIn(position).isEmpty() and self.estaSobreUnEnemigo()){
 			game.removeTickEvent("movimientoBola")
-			game.getObjectsIn(position).first().recibirAtaque(10)
+			game.getObjectsIn(position).first().recibirAtaque(goku.danio() / 2)
 			game.getObjectsIn(position).first().morir()
 			game.removeVisual(self)
 		}

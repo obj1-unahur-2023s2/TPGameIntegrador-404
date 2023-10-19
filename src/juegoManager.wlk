@@ -37,7 +37,7 @@ object juego{
 		keyboard.q().onPressDo{ goku.golpear() }
 		keyboard.w().onPressDo{ goku.usarBolaDeEnergia() }
 		keyboard.e().onPressDo{ goku.usarBengalaSolar() }
-		 
+		keyboard.r().onPressDo{ goku.transformarse() }
 	}
 	
 	method eliminarEnemigo(){ 

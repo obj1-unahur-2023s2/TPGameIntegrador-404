@@ -33,7 +33,7 @@ class EntidadesVivas{
 	
 	method avanzar() {
 		//el personaje avanza solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.up(1)).isEmpty()){
+		if (game.getObjectsIn(position.up(1)).isEmpty() and not estaAturdido){
 			position = position.up(1)
 		}
 		accion = "Atras"
@@ -41,7 +41,7 @@ class EntidadesVivas{
 	
 	method retroceder() {
 		//el personaje retrocede solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.down(1)).isEmpty()){
+		if (game.getObjectsIn(position.down(1)).isEmpty() and not estaAturdido){
 			position = position.down(1)
 		}
 		accion = "Frente"
@@ -49,7 +49,7 @@ class EntidadesVivas{
 	
 	method derecha() {
 		//el personaje avanza a la derecha solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.right(1)).isEmpty()){
+		if (game.getObjectsIn(position.right(1)).isEmpty() and not estaAturdido){
 			position = position.right(1)
 		}
 		accion = "Derecha"
@@ -57,7 +57,7 @@ class EntidadesVivas{
 	
 	method izquierda() {
 		//el personaje avanza a la izquierda solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.left(1)).isEmpty()){
+		if (game.getObjectsIn(position.left(1)).isEmpty() and not estaAturdido){
 			position = position.left(1)
 		}
 		accion = "Izquierda"
@@ -74,11 +74,17 @@ class EntidadesVivas{
 object goku inherits EntidadesVivas(position = game.center()){
 	
 	var energia= 100
+	var furia = 100
+	var estaTransformado = false
+	var danio = 20
+	method danio() = danio
 	method energia()= energia
 	method usarBolaDeFuego(){
 		energia= energia - 10
 	}
-	method image() = "assets/jugador/" + accion + ".png"
+	
+	method image() = if (not estaTransformado) "assets/jugador/" + accion + ".png" else "assets/jugador/ssj/" + accion + ".png"
+	
     method vida() = vida
     
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
@@ -96,6 +102,17 @@ object goku inherits EntidadesVivas(position = game.center()){
 			self.golpe("Izquierda")
 		}
 
+	}
+	
+	method transformarse(){
+		if (furia == 100 and not estaTransformado){
+			estaTransformado = true
+			animaciones.transformacion()
+			danio *= 2
+		}
+		else{
+			game.say(self, "no me puedo transformar")
+		}
 	}
 	
 	method hacerDanio(cant){ //realiza daño hacia el enemigo que esta en la direccion que mira el personaje
@@ -121,7 +138,7 @@ object goku inherits EntidadesVivas(position = game.center()){
 
     method golpe(direccion){ //animacion de golpear inplementada junto con el daño
 
-        self.hacerDanio(20)
+        self.hacerDanio(danio)
         animaciones.golpear(self,direccion)
     }
 	
