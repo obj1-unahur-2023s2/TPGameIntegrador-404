@@ -50,4 +50,5 @@ object juego{
 		enemigo = null
 	}  // se debe modificar para que funcione con diferentes enemigos
 	
+	method arboles() = arboles
 }

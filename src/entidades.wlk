@@ -2,7 +2,7 @@ import wollok.game.*
 import habilidades.*
 import juegoManager.*
 import animaciones.*
-
+import obstaculos.*
 
 
 
@@ -163,18 +163,22 @@ class Enemigo inherits EntidadesVivas{
 	method movimiento() = //el enemigo se mueve hacia donde esta el jugador
 		
 		if (goku.position().x() > self.position().x() and self.puedeMoverse()){
+			 self.esquivarArbol()
 			 self.derecha()
 			 self.hacerDanio(5,"Derecha")
 		}
 		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){
+			self.esquivarArbol()
 			self.izquierda()
 			self.hacerDanio(5,"Izquierda")
 		}
 		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
+			self.esquivarArbol()
 			self.avanzar()
 			self.hacerDanio(5,"Atras")
 		}
 		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
+			self.esquivarArbol()
 			self.retroceder()
 			self.hacerDanio(5,"Frente")
 		}
@@ -208,6 +212,33 @@ class Enemigo inherits EntidadesVivas{
 			goku.position().y()-self.position().y() >= -4 and
 			super()
 		}
+		method esquivarArbol()
+		{
+			if(juego.arboles().any({arbol => accion == "Frente" and position.down(1) == arbol.position()}))
+				{
+					self.izquierda()
+					self.avanzar()
+				}
+			else if(juego.arboles().any({arbol => accion == "Atras" and position.up(1) == arbol.position()}))
+				{
+					self.izquierda()
+					self.retroceder()
+				}
+				else if(juego.arboles().any({arbol => accion == "Derecha" and position.right(1) == arbol.position()}))
+				{
+					self.retroceder()
+					self.izquierda()
+				}
+				else if(juego.arboles().any({arbol => accion == "Izquierda" and position.left(1) == arbol.position()}))
+				{
+					self.retroceder()
+					self.derecha()
+				}
+		}
+	
+		
+	
+
 	
 	method movimientoEnemigo(){ //el enemigo da un paso cada medio segundo
 		
