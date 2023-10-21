@@ -1,11 +1,14 @@
 import wollok.game.*
 import entidades.*
 import indicadores.*
+import obstaculos.*
 
 object juego{
 	
 	var enemigo = new Enemigo(position = game.at(4,4))
 	const property enemigos = [enemigo]
+	
+	const arboles = [new Arbol(position = game.at(10,10)), new Arbol(position = game.at(14,6)), new Arbol(position = game.at(6,5)), new Arbol(position = game.at(18,11))]
 	
 	method iniciar() {
 		
@@ -25,7 +28,9 @@ object juego{
 		game.addVisual(enemigo)
 		game.addVisual(barraDeVida)
 		game.addVisual(barraDeEnergia)
-		}
+		arboles.forEach({a => game.addVisual(a)})
+		
+	}
 		
 	
 	

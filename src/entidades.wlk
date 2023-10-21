@@ -5,15 +5,7 @@ import animaciones.*
 
 
 
-class Obstaculos{
-	
-	const position
-	
-	method recibirAtaque() {}
-	method serAturdido(tiempo) {}
-	method position() = position
-	
-}
+
 
 class EntidadesVivas{
 	
@@ -190,19 +182,19 @@ class Enemigo inherits EntidadesVivas{
 	method hacerDanio(cant, direccion){ //como funciona el ataque del enemigo es diferente al del jugador, si no cada vez que camina lanza una ataque
 										// ver como lo podemos mejorar, investigar como podemos hacer que el enemigo de golpes cada mas tiempo
 		
-		if (accion == "Frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
+		if (accion == "Frente" and position.down(1) == goku.position()){
 			game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
 			animaciones.golpear(self,direccion)
 		}
-		else if (accion == "Atras" and not game.getObjectsIn(position.up(1)).isEmpty()){
+		else if (accion == "Atras" and position.up(1) == goku.position()){
 			game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
 			animaciones.golpear(self,direccion)
 		}
-		else if (accion == "Derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
+		else if (accion == "Derecha" and position.right(1) == goku.position()){
 			game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
 			animaciones.golpear(self,direccion)
 		}
-		else if (accion == "Izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
+		else if (accion == "Izquierda" and position.left(1) == goku.position()){
 			game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
 			animaciones.golpear(self,direccion)
 		}
