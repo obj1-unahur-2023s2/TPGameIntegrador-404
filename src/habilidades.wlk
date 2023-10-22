@@ -45,7 +45,7 @@ class BolaDeEnergia {
 	}
 	
 	method hacerDanio(){
-		if ( not game.getObjectsIn(position).isEmpty() and self.estaSobreUnEnemigo()){
+		if ( not game.getObjectsIn(position).isEmpty() and self.estaSobreUnEnemigoOObstaculo()){
 			game.removeTickEvent("movimientoBola")
 			game.getObjectsIn(position).first().recibirAtaque(goku.danio() / 2)
 			game.getObjectsIn(position).first().morir()
@@ -53,7 +53,8 @@ class BolaDeEnergia {
 		}
 	}
 	
-	method estaSobreUnEnemigo()= juego.enemigos().any( {e => game.getObjectsIn(position).first() == e})
+	method estaSobreUnEnemigoOObstaculo() = 
+		juego.enemigos().any( {e => game.getObjectsIn(position).first() == e}) or juego.obstaculos().any( { o => o.position() == self.position()  } )
 }
 
 object bengalaSolar{

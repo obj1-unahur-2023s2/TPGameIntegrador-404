@@ -242,10 +242,10 @@ class Enemigo inherits EntidadesVivas{
 			}
 	}
 	
-	method hayUnArbolALaDerecha() = juego.arboles().any({arbol => position.right(1) == arbol.position()})
-	method hayUnArbolALaIzquierda() = juego.arboles().any({arbol => position.left(1) == arbol.position()})
-	method hayUnArbolArriba() = juego.arboles().any({arbol => position.up(1) == arbol.position()})
-	method hayUnArbolAbajo() = juego.arboles().any({arbol => position.down(1) == arbol.position()})
+	method hayUnArbolALaDerecha() = juego.obstaculos().any({arbol => position.right(1) == arbol.position()})
+	method hayUnArbolALaIzquierda() = juego.obstaculos().any({arbol => position.left(1) == arbol.position()})
+	method hayUnArbolArriba() = juego.obstaculos().any({arbol => position.up(1) == arbol.position()})
+	method hayUnArbolAbajo() = juego.obstaculos().any({arbol => position.down(1) == arbol.position()})
 	
 
 	
