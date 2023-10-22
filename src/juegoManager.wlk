@@ -9,6 +9,7 @@ object juego{
 	const property enemigos = [enemigo]
 	
 	const arboles = [new Arbol(position = game.at(10,10)), new Arbol(position = game.at(14,6)), new Arbol(position = game.at(6,5)), new Arbol(position = game.at(18,11))]
+	method arboles() = arboles
 	
 	method iniciar() {
 		
@@ -50,5 +51,4 @@ object juego{
 		enemigo = null
 	}  // se debe modificar para que funcione con diferentes enemigos
 	
-	method arboles() = arboles
 }

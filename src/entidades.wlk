@@ -160,29 +160,34 @@ class Enemigo inherits EntidadesVivas{
 	
 	method image() = "assets/enemigos/enemigo" + accion + ".png"
 	
-	method movimiento() = //el enemigo se mueve hacia donde esta el jugador
+	method movimiento(){ //el enemigo se mueve hacia donde esta el jugador
 		
 		if (goku.position().x() > self.position().x() and self.puedeMoverse()){
-			 self.esquivarArbol()
+			if (self.hayUnArbolALaDerecha()){
+			 	self.esquivarArbol()
+			 }
 			 self.derecha()
 			 self.hacerDanio(5,"Derecha")
 		}
 		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){
-			self.esquivarArbol()
+			 if (self.hayUnArbolALaIzquierda()){
+			 	self.esquivarArbol()
+			 }
 			self.izquierda()
 			self.hacerDanio(5,"Izquierda")
 		}
 		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
-			self.esquivarArbol()
 			self.avanzar()
+			self.esquivarArbol()
 			self.hacerDanio(5,"Atras")
 		}
 		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
-			self.esquivarArbol()
 			self.retroceder()
+			self.esquivarArbol()
 			self.hacerDanio(5,"Frente")
 		}
 		
+	}
 	method hacerDanio(cant, direccion){ //como funciona el ataque del enemigo es diferente al del jugador, si no cada vez que camina lanza una ataque
 										// ver como lo podemos mejorar, investigar como podemos hacer que el enemigo de golpes cada mas tiempo
 		
@@ -212,31 +217,35 @@ class Enemigo inherits EntidadesVivas{
 			goku.position().y()-self.position().y() >= -4 and
 			super()
 		}
-		method esquivarArbol()
-		{
-			if(juego.arboles().any({arbol => accion == "Frente" and position.down(1) == arbol.position()}))
-				{
-					self.izquierda()
-					self.avanzar()
-				}
-			else if(juego.arboles().any({arbol => accion == "Atras" and position.up(1) == arbol.position()}))
-				{
-					self.izquierda()
-					self.retroceder()
-				}
-				else if(juego.arboles().any({arbol => accion == "Derecha" and position.right(1) == arbol.position()}))
-				{
-					self.retroceder()
-					self.izquierda()
-				}
-				else if(juego.arboles().any({arbol => accion == "Izquierda" and position.left(1) == arbol.position()}))
-				{
-					self.retroceder()
-					self.derecha()
-				}
-		}
-	
 		
+	method esquivarArbol(){
+		if( self.hayUnArbolAbajo() and accion == "Frente" )
+			{
+				self.izquierda()
+				game.schedule(100,{self.retroceder()})
+				
+			}
+		else if( self.hayUnArbolArriba() and accion == "Atras" )
+			{
+				self.derecha()
+				game.schedule(100,{self.avanzar()})
+			}
+		else if(self.hayUnArbolALaDerecha() and accion == "Derecha" )
+			{
+				self.retroceder()
+				self.izquierda()
+			}
+		else if(self.hayUnArbolALaIzquierda() and accion == "Izquierda")
+			{
+				self.avanzar()
+				self.derecha()
+			}
+	}
+	
+	method hayUnArbolALaDerecha() = juego.arboles().any({arbol => position.right(1) == arbol.position()})
+	method hayUnArbolALaIzquierda() = juego.arboles().any({arbol => position.left(1) == arbol.position()})
+	method hayUnArbolArriba() = juego.arboles().any({arbol => position.up(1) == arbol.position()})
+	method hayUnArbolAbajo() = juego.arboles().any({arbol => position.down(1) == arbol.position()})
 	
 
 	
