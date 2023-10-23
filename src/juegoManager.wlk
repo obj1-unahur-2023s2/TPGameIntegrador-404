@@ -5,7 +5,8 @@ import obstaculos.*
 
 object juego{
 	
-	var enemigo = new Enemigo(position = game.at(4,4))
+	const enemigo = new Enemigo(position = game.at(4,4), danio= 5)
+	
 	const property enemigos = [enemigo]
 	
 	const obstaculos = [
@@ -14,7 +15,7 @@ object juego{
 	
 	const bordes = []
 	
-	method bordes() = bordes
+	method enemigos() = enemigos
 	
 	method obstaculos() = obstaculos
 	
@@ -29,7 +30,8 @@ object juego{
 		self.bordesDelMapa()
 		self.agregarVisuales()
 		self.configurarTeclas()
-		enemigo.movimientoEnemigo()
+		enemigo.velocidadDeMovimiento()
+		enemigo.velocidadDeAtaque()
 		
 	}
 	
@@ -42,8 +44,6 @@ object juego{
 		bordes.forEach({b => game.addVisual(b)})
 		
 	}
-		
-	
 	
 	method configurarTeclas() {
 		keyboard.up().onPressDo{ goku.avanzar()}
@@ -56,12 +56,6 @@ object juego{
 		keyboard.r().onPressDo{ goku.transformarse() }
 	}
 	
-	method eliminarEnemigo(){ 
-		game.removeVisual(enemigo)
-		enemigo = null
-	}  // se debe modificar para que funcione con diferentes enemigos
-	
-	
 	method bordesDelMapa(){
 		
 		self.bordeSuperior()
@@ -69,7 +63,6 @@ object juego{
 		self.bordeDerecho()
 		self.bordeInferior()
 	}
-	
 	
 	method bordeInferior(){
 		(2..19).forEach({x => bordes.add(new Obstaculo(position = game.at(x , 2)))})

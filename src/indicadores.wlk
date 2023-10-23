@@ -4,7 +4,7 @@ import entidades.*
 object barraDeVida{
 	
 	method position()= game.at(0.5,15)
-	method image() = 
+	method image() =
 		if (goku.vida() >= 80)                          	 "indicadores/barraDeVidaLlena.png"
 		else if ((goku.vida() < 80) and (goku.vida()>=60))   "indicadores/barraDeVida80.png"
 		else if ((goku.vida() < 60) and (goku.vida() >=40))  "indicadores/barraDeVida60.png"

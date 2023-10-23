@@ -4,6 +4,7 @@ import juegoManager.*
 import animaciones.*
 
 class BolaDeEnergia {
+	
 	var position
 	method image() = "ataques/bolaDeEnergia.png"
 	method position() = position
@@ -15,7 +16,7 @@ class BolaDeEnergia {
 		}
 		else if (goku.accion() == "Atras"){
 			animaciones.disparar(goku,"Atras")
-			game.onTick(250, "movimientoBola", {self.moverseAtras()})
+			game.onTick(250, "movimientoBola", {self.moverseAtras()})  //cambiar
 		}
 		else if (goku.accion() == "Derecha"){
 			animaciones.disparar(goku,"Derecha")
@@ -57,18 +58,21 @@ class BolaDeEnergia {
 		juego.enemigos().any( {e => game.getObjectsIn(position).first() == e}) or juego.obstaculos().any( { o => o.position() == self.position()  } )
 }
 
-object bengalaSolar{
+class BengalaSolar{
 	
 	method position() = goku.position()
 	
-	method stunear(){
+	method aturdir(){
 		if ( not self.enemigosAlRededor().isEmpty()){
-			self.enemigosAlRededor().first().serAturdido(2000)
+			self.enemigosAlRededor().forEach({ e => e.serAturdido(2000) })
+			game.schedule(150,{game.removeVisual(self)})
 		}
 	}
+	
 	method enemigosAlRededor() = 
-		game.getObjectsIn(self.position().down(1)) + game.getObjectsIn(self.position().up(1)) + game.getObjectsIn(self.position().right(1)) + game.getObjectsIn(self.position().left(1))
-		
+		juego.enemigos().filter({ 
+			e => self.position().up(1) == e.position() or self.position().down(1) == e.position() or self.position().right(1) == e.position() or self.position().left(1) == e.position()
+		})	
 }
 
 
