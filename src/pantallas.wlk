@@ -7,6 +7,4 @@ class Pantalla
 	
 }
 object inicio inherits Pantalla(image = "assets/Victoria.png", position = game.at(0,0))
-{
-	
-}
+{}
