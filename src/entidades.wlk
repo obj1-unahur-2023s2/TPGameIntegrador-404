@@ -263,5 +263,7 @@ class Enemigo inherits EntidadesVivas{
 			game.schedule(2000, {game.removeVisual(self)})  //cambiar para que tambien funcione con cualquier enemigo
 		}
 	}
+
 	
 }
+

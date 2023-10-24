@@ -2,6 +2,7 @@ import wollok.game.*
 import entidades.*
 import indicadores.*
 import obstaculos.*
+import pantallas.*
 
 object juego{
 	
@@ -20,11 +21,19 @@ object juego{
 	method obstaculos() = obstaculos
 	
 	method iniciar() {
-		
+		game.clear()
 		game.height(16)
 		game.width(22)
 		game.title("The Legend Of SuperSaiyan")
 		game.boardGround("assets/mapaNamek.png")
+		game.addVisual(inicio)
+		keyboard.p().onPressDo{self.configurarFacil()}
+		keyboard.o().onPressDo{self.configurarDificil()}
+		
+	}
+	method configurarFacil()
+	{
+		game.clear()
 		
 		
 		self.bordesDelMapa()
@@ -32,7 +41,17 @@ object juego{
 		self.configurarTeclas()
 		enemigo.velocidadDeMovimiento()
 		enemigo.velocidadDeAtaque()
+	}
+	method configurarDificil()
+	{
+		game.clear()
 		
+		
+		self.bordesDelMapa()
+		self.agregarVisuales()
+		self.configurarTeclas()
+		enemigo.velocidadDeMovimiento()
+		enemigo.velocidadDeAtaque()
 	}
 	
 	method agregarVisuales(){
