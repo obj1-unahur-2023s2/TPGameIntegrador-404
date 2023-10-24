@@ -3,9 +3,7 @@
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+Lionel Betancor
 
 ## Capturas
 
