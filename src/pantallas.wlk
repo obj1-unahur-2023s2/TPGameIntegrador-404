@@ -6,5 +6,4 @@ class Pantalla
 	var property position 
 	
 }
-object inicio inherits Pantalla(image = "assets/Victoria.png", position = game.at(0,0))
-{}
+object inicio inherits Pantalla(image = "assets/Victoria.png", position = game.at(0,0)){}
