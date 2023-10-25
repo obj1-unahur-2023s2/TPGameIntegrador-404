@@ -1,3 +1,4 @@
+import wollok.game.*
 class Obstaculo{
 	
 	const position
@@ -12,4 +13,8 @@ class Obstaculo{
 class Arbol inherits Obstaculo{
 	
 	method image() = "assets/obstaculos/arbol.png"
+}
+
+object recargaVida inherits Obstaculo(position = game.at ( 15,10 )){
+	method image() = "assets/ataques/bolaDeEnergia.png"
 }

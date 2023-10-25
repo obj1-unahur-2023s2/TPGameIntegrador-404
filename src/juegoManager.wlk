@@ -3,7 +3,6 @@ import entidades.*
 import indicadores.*
 import obstaculos.*
 import pantallas.*
-
 object juego{
 	
 	const enemigo = new Enemigo(position = game.at(4,4), danio= 5)
@@ -15,7 +14,6 @@ object juego{
 	]
 	
 	const bordes = []
-	
 	method enemigos() = enemigos
 	
 	method obstaculos() = obstaculos
@@ -56,6 +54,7 @@ object juego{
 	
 	method agregarVisuales(){
 		game.addVisual(goku)
+		game.addVisual(recargaVida)
 		game.addVisual(enemigo)
 		game.addVisual(barraDeVida)
 		game.addVisual(barraDeEnergia)
@@ -73,6 +72,7 @@ object juego{
 		keyboard.w().onPressDo{ goku.usarBolaDeEnergia() }
 		keyboard.e().onPressDo{ goku.usarBengalaSolar() }
 		keyboard.r().onPressDo{ goku.transformarse() }
+		keyboard.m().onPressDo{ goku.agarrarVida() }
 	}
 	
 	method bordesDelMapa(){
