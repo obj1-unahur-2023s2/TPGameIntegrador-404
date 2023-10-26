@@ -9,10 +9,11 @@ class EntidadesVivas{
 	
 	var position
 	var vida = 100
+	var furia = 0
 	var property accion = "Frente"  //pasar a objeto
 	var estaAturdido = false
 	var danio
-	
+	method furia()= furia
 	method danio() = danio
 	method estaVivo() = vida > 0
 	method position() = position
@@ -22,6 +23,7 @@ class EntidadesVivas{
 	
 	method recibirAtaque(cant){
 		vida -= cant
+		furia+=10
 	}
 		
 	method puedeMoverse() = not estaAturdido and self.estaVivo()
@@ -68,7 +70,6 @@ class EntidadesVivas{
 object goku inherits EntidadesVivas(position = game.center(), danio = 20){
 	
 	var energia= 100
-	var furia = 100
 	var estaTransformado = false
 	method energia()= energia
 	

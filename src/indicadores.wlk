@@ -34,3 +34,20 @@ object barraDeEnergia{
 		else if ((goku.energia() < 11) and (goku.energia() >1))   "indicadores/barraDeEnergia10.png"
 		else  								  				 "indicadores/barraDeEnergia0.png"
 }
+
+object barraDeFuria{
+	method position()= game.at(6,15)
+	method image() =
+		if (goku.furia() >= 91)                          	 "indicadores/barraDeFuriaLlena.png"
+		else if ((goku.furia()< 91) and (goku.furia()>=81))   "indicadores/barraDeFuria90.png"
+		else if ((goku.furia()< 81) and (goku.furia()>=71))   "indicadores/barraDeFuria80.png"
+		else if ((goku.furia()< 71) and (goku.furia()>=61))   "indicadores/barraDeFuria70.png"
+		else if ((goku.furia() < 61) and (goku.furia() >=51))  "indicadores/barraDeFuria60.png"
+		else if ((goku.furia() < 51) and (goku.furia() >=41))  "indicadores/barraDeFuria50.png"
+		else if ((goku.furia() < 41) and (goku.furia() >=31))  "indicadores/barraDeFuria40.png"
+		else if ((goku.furia() < 31) and (goku.furia() >=21))  "indicadores/barraDeFuria30.png"
+		else if ((goku.furia() < 21) and (goku.furia() >=11))  "indicadores/barraDeFuria20.png"
+		else if ((goku.furia() < 11) and (goku.furia() >1))   "indicadores/barraDeFuria10.png"
+		else  								  				 "indicadores/barraDeFuria0.png"
+	
+}
