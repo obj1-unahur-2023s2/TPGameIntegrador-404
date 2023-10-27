@@ -3,17 +3,18 @@ import habilidades.*
 import juegoManager.*
 import animaciones.*
 import obstaculos.*
+import direcciones.*
 
 
 class EntidadesVivas{
 	
 	var position
-	var vida = 100
-	var furia = 0
-	var property accion = "Frente"  //pasar a objeto
+	var property vida = 100
+	var property direccionHaciaLaQueMira = frente
+	var property accion = ""
 	var estaAturdido = false
 	var danio
-	method furia()= furia
+	
 	method danio() = danio
 	method estaVivo() = vida > 0
 	method position() = position
@@ -23,42 +24,42 @@ class EntidadesVivas{
 	
 	method recibirAtaque(cant){
 		vida -= cant
-		furia+=10
+		goku.furia( 100.min(goku.furia() + 10) )
 	}
 		
 	method puedeMoverse() = not estaAturdido and self.estaVivo()
 	
 	
-	method avanzar() {
+	method caminarArriba() {
 		//el personaje avanza solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		if (game.getObjectsIn(position.up(1)).isEmpty() and not estaAturdido){
 			position = position.up(1)
 		}
-		accion = "Atras"
+		direccionHaciaLaQueMira = atras
 	}
 	
-	method retroceder() {
+	method caminarAbajo() {
 		//el personaje retrocede solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		if (game.getObjectsIn(position.down(1)).isEmpty() and not estaAturdido){
 			position = position.down(1)
 		}
-		accion = "Frente"
+		direccionHaciaLaQueMira = frente
 	}
 	
-	method derecha() {
+	method caminarDerecha() {
 		//el personaje avanza a la derecha solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		if (game.getObjectsIn(position.right(1)).isEmpty() and not estaAturdido){
 			position = position.right(1)
 		}
-		accion = "Derecha"
+		direccionHaciaLaQueMira = derecha
 	}
 	
-	method izquierda() {
+	method caminarIzquierda() {
 		//el personaje avanza a la izquierda solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		if (game.getObjectsIn(position.left(1)).isEmpty() and not estaAturdido){
 			position = position.left(1)
 		}
-		accion = "Izquierda"
+		direccionHaciaLaQueMira = izquierda
 	}
 	 
     method serAturdido(tiempo){
@@ -70,76 +71,28 @@ class EntidadesVivas{
 object goku inherits EntidadesVivas(position = game.center(), danio = 20){
 	
 	var energia= 100
+	var property furia = 100
 	var estaTransformado = false
 	method energia()= energia
 	
-	override method image() = if (not estaTransformado) "assets/jugador/" + accion + ".png" else "assets/jugador/ssj/" + accion + ".png"
-    method agarrarVida(){
-    	if(accion == "Frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
-    		vida = vida + 10
-    	game.removeVisual(recargaVida)
-    	}
-    	else if (accion == "Atras" and not game.getObjectsIn(position.up(1)).isEmpty()){  //cambiar
-          vida = vida + 10
-    	game.removeVisual(recargaVida)
-        }
-        else if (accion == "Derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
-            vida = vida + 10
-    	game.removeVisual(recargaVida)
-        }
-        else if (accion == "Izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
-            vida = vida + 10
-    	game.removeVisual(recargaVida)
-        }
-    	
-    }
+	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
+    
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
-		
-		if (accion == "Frente"){
-			self.realizarAtaqueHacia("Frente")
-		}
-		else if (accion == "Atras"){
-			self.realizarAtaqueHacia("Atras")
-		}
-		else if (accion == "Derecha"){
-			self.realizarAtaqueHacia("Derecha")  //cambiar
-		}
-		else if (accion == "Izquierda"){
-			self.realizarAtaqueHacia("Izquierda")
-		}
+		direccionHaciaLaQueMira.atacarHaciaLaDireccionQueMira(self)
 	}
-	
-   method realizarAtaqueHacia(direccion){ 
-        self.hacerDanio(danio)
-        animaciones.golpear(self,direccion)
+
+   method realizarAtaque(){ 
+        direccionHaciaLaQueMira.jugadorHacerDanioHaciaLaDireccionQueMira(self,danio)
+        animaciones.golpear(self)
     }
 	
-	method hacerDanio(cant){ //realiza daño hacia el enemigo que esta en la direccion que mira el personaje
-
-        if (accion == "Frente" and not game.getObjectsIn(position.down(1)).isEmpty()){
-            game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(position.down(1)).first().morir()
-
-        }
-        else if (accion == "Atras" and not game.getObjectsIn(position.up(1)).isEmpty()){  //cambiar
-            game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(position.up(1)).first().morir()
-        }
-        else if (accion == "Derecha" and not game.getObjectsIn(position.right(1)).isEmpty()){
-            game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(position.right(1)).first().morir()
-        }
-        else if (accion == "Izquierda" and not game.getObjectsIn(position.left(1)).isEmpty()){
-            game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(position.left(1)).first().morir()
-        }
-    }
 	
 	method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
 		if( energia >=0){
 			const bola = new BolaDeEnergia(position = position)
+			animaciones.disparar(self)
 			game.addVisual(bola)
-			bola.desplazarse()
+			direccionHaciaLaQueMira.desplazamiento(bola)
 			energia -= 10
 			}
 		else{ game.say(self,"No tengo suficiente energia")}
@@ -175,7 +128,7 @@ object goku inherits EntidadesVivas(position = game.center(), danio = 20){
 
 class Enemigo inherits EntidadesVivas{
 	
-	override method image() = "assets/enemigos/enemigo" + accion + ".png"
+	override method image() = "assets/enemigos/enemigo" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
 	
 	method movimiento(){ //el enemigo se mueve hacia donde esta el jugador
 		
@@ -183,47 +136,28 @@ class Enemigo inherits EntidadesVivas{
 			if (self.hayUnObstaculoALaDerecha()){
 			 	self.esquivarObstaculo()
 			 }
-			 self.derecha()
+			 self.caminarDerecha()
 		}
 		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){  //cambiar
 			 if (self.hayUnObstaculoALaIzquierda()){
 			 	self.esquivarObstaculo()
 			 }
-			self.izquierda()
+			self.caminarIzquierda()
 		}
 		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
-			self.avanzar()
+			self.caminarArriba()
 			self.esquivarObstaculo()
 		}
 		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
-			self.retroceder()
+			self.caminarAbajo()
 			self.esquivarObstaculo()
 		}
 		
 	}
-	method hacerDanio(cant, direccion){ //como funciona el ataque del enemigo es diferente al del jugador, si no cada vez que camina lanza una ataque
-		
-		if (accion == "Frente" and position.down(1) == goku.position() and self.puedeMoverse() ){
-			game.getObjectsIn(position.down(1)).first().recibirAtaque(cant)
-			game.getObjectsIn(position.down(1)).first().morir()
-			animaciones.golpear(self,direccion)
-		}
-		else if (accion == "Atras" and position.up(1) == goku.position() and self.puedeMoverse() ){  //cambiar
-			game.getObjectsIn(position.up(1)).first().recibirAtaque(cant)
-			game.getObjectsIn(position.up(1)).first().morir()
-			animaciones.golpear(self,direccion)
-		}
-		else if (accion == "Derecha" and position.right(1) == goku.position() and self.puedeMoverse() ){
-			game.getObjectsIn(position.right(1)).first().recibirAtaque(cant)
-			game.getObjectsIn(position.right(1)).first().morir()
-			animaciones.golpear(self,direccion)
-		}
-		else if (accion == "Izquierda" and position.left(1) == goku.position() and self.puedeMoverse() ){
-			game.getObjectsIn(position.left(1)).first().recibirAtaque(cant)
-			game.getObjectsIn(position.left(1)).first().morir()
-			animaciones.golpear(self,direccion)
-		}
-	}
+	
+	method realizarAtaque(){ 
+        direccionHaciaLaQueMira.enemigoHacerDanioHaciaLaDireccionQueMira(self,danio)
+    }
 	
 	override method puedeMoverse(){ //el enemigo solo se puede mover si el jugador esta en un radio de 4 casillas de el
 		return 
@@ -235,26 +169,26 @@ class Enemigo inherits EntidadesVivas{
 		}
 		
 	method esquivarObstaculo(){  // metodo para que el enemigo no se quede enganchado contra un obstaculo, y pase por al lado
-		if( self.hayUnObstaculoAbajo() and accion == "Frente" )
+		if( self.hayUnObstaculoAbajo() and direccionHaciaLaQueMira == "Frente" )
 			{
-				self.izquierda()
-				game.schedule(100,{self.retroceder()})
+				self.caminarIzquierda()
+				game.schedule(100,{self.caminarAbajo()})
 				
 			}
-		else if( self.hayUnObstaculoArriba() and accion == "Atras" )  //cambiar
+		else if( self.hayUnObstaculoArriba() and direccionHaciaLaQueMira == "Atras" )  //cambiar
 			{
-				self.derecha()
-				game.schedule(100,{self.avanzar()})
+				self.caminarDerecha()
+				game.schedule(100,{self.caminarArriba()})
 			}
-		else if(self.hayUnObstaculoALaDerecha() and accion == "Derecha" )
+		else if(self.hayUnObstaculoALaDerecha() and direccionHaciaLaQueMira == "Derecha" )
 			{
-				self.retroceder()
-				self.izquierda()
+				self.caminarAbajo()
+				self.caminarIzquierda()
 			}
-		else if(self.hayUnObstaculoALaIzquierda() and accion == "Izquierda")
+		else if(self.hayUnObstaculoALaIzquierda() and direccionHaciaLaQueMira == "Izquierda")
 			{
-				self.avanzar()
-				self.derecha()
+				self.caminarArriba()
+				self.caminarDerecha()
 			}
 	}
 	
@@ -270,19 +204,15 @@ class Enemigo inherits EntidadesVivas{
 	
 	method velocidadDeAtaque(){ //tiempo en el que el enemigo lanza un ataque
 		
-		game.onTick(700, "movimientoEnemgio",{ self.hacerDanio(danio, accion) })
+		game.onTick(700, "movimientoEnemgio",{ self.realizarAtaque() })
 	}
 	
 	method morir(){ 
 		if (not self.estaVivo()){
-			self.serAturdido(2050)
-			accion = "Muere1"
-			game.schedule(200, {accion = "Muere2"})  //cambiar
-			game.schedule(400, {accion = "Muere3"})
+			animaciones.morir(self)
 			game.schedule(2000, {game.removeVisual(self)})  //cambiar para que tambien funcione con cualquier enemigo
 		}
 	}
 
-	
 }
 

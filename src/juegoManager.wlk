@@ -65,15 +65,14 @@ object juego{
 	}
 	
 	method configurarTeclas() {
-		keyboard.up().onPressDo{ goku.avanzar()}
-		keyboard.down().onPressDo{ goku.retroceder()}
-		keyboard.left().onPressDo{ goku.izquierda()}
-		keyboard.right().onPressDo{ goku.derecha()}
+		keyboard.up().onPressDo{ goku.caminarArriba()}
+		keyboard.down().onPressDo{ goku.caminarAbajo()}
+		keyboard.left().onPressDo{ goku.caminarIzquierda()}
+		keyboard.right().onPressDo{ goku.caminarDerecha()}
 		keyboard.q().onPressDo{ goku.golpear() }
 		keyboard.w().onPressDo{ goku.usarBolaDeEnergia() }
 		keyboard.e().onPressDo{ goku.usarBengalaSolar() }
 		keyboard.r().onPressDo{ goku.transformarse() }
-		keyboard.m().onPressDo{ goku.agarrarVida() }
 	}
 	
 	method bordesDelMapa(){

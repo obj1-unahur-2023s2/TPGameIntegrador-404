@@ -1,33 +1,37 @@
 import wollok.game.*
-import entidades.goku
+import entidades.*
+import direcciones.*
 
 object animaciones{
 	
-	method golpear(entidad,direccion){ //animacion de golpe
+	method golpear(entidad){ //animacion de golpe
 		
-		entidad.accion(direccion + "Golpe1")
-		game.schedule(100, {entidad.accion(direccion + "Golpe2")})
-		game.schedule(200, {entidad.accion(direccion + "Golpe3")})  //pensarlo de diferente forma, con "formula"
-		game.schedule(300, {entidad.accion(direccion + "Golpe4")})
-		game.schedule(400, {entidad.accion(direccion)})
+		entidad.accion("Golpe")
+		(1..3).forEach( { n => game.schedule( 100 * n, { entidad.accion("golpe" + n.toString()) } ) } )
+		game.schedule(400, {entidad.accion("")})
 		
 	}
 	
-	method disparar(entidad,direccion){ //animacion de lanzar kame
+	method disparar(entidad){ //animacion de lanzar kame
 		
-		entidad.accion(direccion + "Kame1")
-		game.schedule(100, {entidad.accion(direccion + "Kame2")})
-		game.schedule(200, {entidad.accion(direccion + "Kame3")})
-		game.schedule(400, {entidad.accion(direccion)})
+		entidad.accion("Kame")
+		game.schedule(100, {entidad.accion("Kame1")})
+		game.schedule(200, {entidad.accion("Kame2")})
+		game.schedule(400, {entidad.accion("")})
 	}
 	
 	method transformacion(){  //animacion de transformacion
 		goku.serAturdido(530)
-		goku.accion("Transformacion1")
-		game.schedule(130, {goku.accion("Transformacion2")})
-		game.schedule(230, {goku.accion("Transformacion3")})
-		game.schedule(330, {goku.accion("Transformacion4")})
-		game.schedule(430, {goku.accion("Transformacion5")})
-		game.schedule(530, {goku.accion("Frente")})
+		goku.direccionHaciaLaQueMira(frente)
+		goku.accion("Transformacion")
+		(1..4).forEach( { n => game.schedule( 125 * n, { goku.accion("Transformacion" + n.toString()) } ) } )
+		game.schedule(530, {goku.accion("")})
+	}
+	
+	method morir(entidad){
+		entidad.direccionHaciaLaQueMira(frente)
+		entidad.accion("Muere")
+		game.schedule(200, {entidad.accion("Muere1")})  //cambiar
+		game.schedule(400, {entidad.accion("Muere2")})
 	}
 }

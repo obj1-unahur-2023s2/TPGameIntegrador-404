@@ -1,4 +1,7 @@
 import wollok.game.*
+import entidades.*
+
+
 class Obstaculo{
 	
 	const position
@@ -17,4 +20,6 @@ class Arbol inherits Obstaculo{
 
 object recargaVida inherits Obstaculo(position = game.at ( 15,10 )){
 	method image() = "assets/ataques/bolaDeEnergia.png"
+	
+	override method recibirAtaque(cant){ goku.vida( goku.vida() + 10 ) }
 }
