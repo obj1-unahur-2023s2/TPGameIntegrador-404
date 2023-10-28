@@ -1,5 +1,6 @@
 import wollok.game.*
 import entidades.*
+import juegoManager.*
 
 
 class Obstaculo{
@@ -15,11 +16,27 @@ class Obstaculo{
 
 class Arbol inherits Obstaculo{
 	
-	method image() = "assets/obstaculos/arbol.png"
+	method image() = "assets/elementos/arbol.png"
 }
 
-object recargaVida inherits Obstaculo(position = game.at ( 15,10 )){
-	method image() = "assets/ataques/bolaDeEnergia.png"
+class CapsulaVida inherits Obstaculo{
+	
+	method image() = "assets/elementos/CapsulaVida.png"
 	
 	override method recibirAtaque(cant){ goku.vida( goku.vida() + 10 ) }
+	override method morir(){ 
+		game.removeVisual(self)
+		juego.eliminarCapsulaVida(self)
+	}
+}
+
+class CapsulaEnergia inherits Obstaculo{
+	
+	method image() = "assets/elementos/CapsulaEnergia.png"
+	
+	override method recibirAtaque(cant){ goku.energia( goku.energia() + 25 ) }
+	override method morir(){ 
+		game.removeVisual(self)
+		juego.eliminarCapsulaEnergia(self)
+	}
 }

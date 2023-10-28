@@ -9,7 +9,7 @@ import direcciones.*
 class EntidadesVivas{
 	
 	var position
-	var property vida = 100
+	var property vida 
 	var property direccionHaciaLaQueMira = frente
 	var property accion = ""
 	var estaAturdido = false
@@ -68,9 +68,9 @@ class EntidadesVivas{
     } //esta funcion tiene inplementado el tiempo, ya que se usara para la habilidad "Bengala Solar" la cual aturde a los enemigos "x" segundos
 }
 
-object goku inherits EntidadesVivas(position = game.center(), danio = 20){
+object goku inherits EntidadesVivas(position = game.center(), danio = 20, vida = 100){
 	
-	var energia= 100
+	var property energia= 100
 	var property furia = 100
 	var estaTransformado = false
 	method energia()= energia
@@ -169,23 +169,23 @@ class Enemigo inherits EntidadesVivas{
 		}
 		
 	method esquivarObstaculo(){  // metodo para que el enemigo no se quede enganchado contra un obstaculo, y pase por al lado
-		if( self.hayUnObstaculoAbajo() and direccionHaciaLaQueMira == "Frente" )
+		if( self.hayUnObstaculoAbajo())
 			{
 				self.caminarIzquierda()
 				game.schedule(100,{self.caminarAbajo()})
 				
 			}
-		else if( self.hayUnObstaculoArriba() and direccionHaciaLaQueMira == "Atras" )  //cambiar
+		else if( self.hayUnObstaculoArriba())  //cambiar
 			{
 				self.caminarDerecha()
 				game.schedule(100,{self.caminarArriba()})
 			}
-		else if(self.hayUnObstaculoALaDerecha() and direccionHaciaLaQueMira == "Derecha" )
+		else if(self.hayUnObstaculoALaDerecha())
 			{
 				self.caminarAbajo()
 				self.caminarIzquierda()
 			}
-		else if(self.hayUnObstaculoALaIzquierda() and direccionHaciaLaQueMira == "Izquierda")
+		else if(self.hayUnObstaculoALaIzquierda())
 			{
 				self.caminarArriba()
 				self.caminarDerecha()

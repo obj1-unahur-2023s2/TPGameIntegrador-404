@@ -3,9 +3,10 @@ import entidades.*
 import indicadores.*
 import obstaculos.*
 import pantallas.*
+
 object juego{
 	
-	const enemigo = new Enemigo(position = game.at(4,4), danio= 5)
+	const enemigo = new Enemigo(position = game.at(4,4), danio= 5, vida = 100)
 	
 	const property enemigos = [enemigo]
 	
@@ -13,10 +14,24 @@ object juego{
 		new Arbol(position = game.at(10,10)), new Arbol(position = game.at(14,6)), new Arbol(position = game.at(6,5)), new Arbol(position = game.at(18,11))
 	]
 	
+	const capsulasVida = []
+	const capsulasEnergia = []
+	
 	const bordes = []
+	
+	
 	method enemigos() = enemigos
 	
 	method obstaculos() = obstaculos
+	
+	method eliminarCapsulaVida(capsula){
+		
+		capsulasVida.remove(capsula)
+	}
+	method eliminarCapsulaEnergia(capsula){
+		
+		capsulasEnergia.remove(capsula)
+	}
 	
 	method iniciar() {
 		game.clear()
@@ -39,6 +54,8 @@ object juego{
 		self.configurarTeclas()
 		enemigo.velocidadDeMovimiento()
 		enemigo.velocidadDeAtaque()
+		game.onTick(15000, "GenerarCapsulas", { self.generarCapsulasVida(2) })
+		game.onTick(7500, "GenerarCapsulas", { self.generarCapsulasEnergia(3) })
 	}
 	method configurarDificil()
 	{
@@ -54,7 +71,6 @@ object juego{
 	
 	method agregarVisuales(){
 		game.addVisual(goku)
-		game.addVisual(recargaVida)
 		game.addVisual(enemigo)
 		game.addVisual(barraDeVida)
 		game.addVisual(barraDeEnergia)
@@ -88,7 +104,7 @@ object juego{
 	}
 	
 	method bordeSuperior(){
-		(2..19).forEach({x => bordes.add(new Obstaculo(position = game.at(x , 14)))})
+		(2..19).forEach({x => bordes.add(new Obstaculo(position = game.at(x , 15)))})
 	}
 	
 	method bordeIzquierdo(){
@@ -97,6 +113,26 @@ object juego{
 	
 	method bordeDerecho(){
 		(2..14).forEach({y => bordes.add(new Obstaculo(position = game.at(20 , y)))})
+	}
+	
+	method posicionAleatoria() = game.at( 2.randomUpTo(20), 3.randomUpTo(13) )
+	
+	method generarCapsulasVida(maxCapsula){
+		
+		if (capsulasVida.size() < maxCapsula) {
+			const nuevaCapsula = new CapsulaVida(position = self.posicionAleatoria())
+			game.addVisual(nuevaCapsula)
+			capsulasVida.add(nuevaCapsula)
+		}
+	}
+	
+	method generarCapsulasEnergia(maxCapsula){
+		
+		if (capsulasEnergia.size() < maxCapsula) {
+			const nuevaCapsula = new CapsulaEnergia(position = self.posicionAleatoria())
+			game.addVisual(nuevaCapsula)
+			capsulasEnergia.add(nuevaCapsula)
+		}
 	}
 }
 
