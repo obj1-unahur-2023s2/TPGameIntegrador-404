@@ -13,18 +13,18 @@ class EntidadesVivas{
 	var property direccionHaciaLaQueMira = frente
 	var property accion = ""
 	var estaAturdido = false
-	var danio
 	
-	method danio() = danio
+
 	method estaVivo() = vida > 0
 	method position() = position
-	method vida() = vida
-	
 	method image()
 	
 	method recibirAtaque(cant){
 		vida -= cant
 		goku.furia( 100.min(goku.furia() + 10) )
+		if (not self.estaVivo()){
+			self.morir()
+		}
 	}
 		
 	method puedeMoverse() = not estaAturdido and self.estaVivo()
@@ -66,15 +66,20 @@ class EntidadesVivas{
     	estaAturdido=true
     	game.schedule(tiempo,{estaAturdido=false})
     } //esta funcion tiene inplementado el tiempo, ya que se usara para la habilidad "Bengala Solar" la cual aturde a los enemigos "x" segundos
+    
+    method morir()
 }
 
-object goku inherits EntidadesVivas(position = game.center(), danio = 20, vida = 100){
+object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	
 	var property energia= 100
 	var property furia = 100
 	var estaTransformado = false
-	method energia()= energia
+	var danio = 100
 	
+	
+	method energia()= energia
+	method danio() = danio
 	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
     
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
@@ -88,12 +93,12 @@ object goku inherits EntidadesVivas(position = game.center(), danio = 20, vida =
 	
 	
 	method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
-		if( energia >=0){
+		if( energia >= 10){
 			const bola = new BolaDeEnergia(position = position)
 			animaciones.disparar(self)
 			game.addVisual(bola)
 			direccionHaciaLaQueMira.desplazamiento(bola)
-			energia -= 10
+			energia = 0.max(energia - 10)
 			}
 		else{ game.say(self,"No tengo suficiente energia")}
 		
@@ -104,7 +109,7 @@ object goku inherits EntidadesVivas(position = game.center(), danio = 20, vida =
 			const bengalaSolar = new BengalaSolar()
 			game.addVisual(bengalaSolar)
 			bengalaSolar.aturdir()
-			energia -= 25
+			energia = 0.max(energia - 25)
 		}
 		else{ game.say(self, "No tengo suficiente energia") }
 	}
@@ -120,13 +125,16 @@ object goku inherits EntidadesVivas(position = game.center(), danio = 20, vida =
 		}
 	}
 	
-	method morir(){ 
+	override method morir(){ 
 		//por ahora no hace nada, se hara cuando se haga la pantalla de game over
 	}
 	
 }
 
-class Enemigo inherits EntidadesVivas{
+object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
+	
+	var property danio = 0
+	
 	
 	override method image() = "assets/enemigos/enemigo" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
 	
@@ -151,8 +159,7 @@ class Enemigo inherits EntidadesVivas{
 		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
 			self.caminarAbajo()
 			self.esquivarObstaculo()
-		}
-		
+		}	
 	}
 	
 	method realizarAtaque(){ 
@@ -197,21 +204,20 @@ class Enemigo inherits EntidadesVivas{
 	method hayUnObstaculoArriba() = juego.obstaculos().any({obstaculo => position.up(1) == obstaculo.position()})
 	method hayUnObstaculoAbajo() = juego.obstaculos().any({obstaculo => position.down(1) == obstaculo.position()})
 	
-	method velocidadDeMovimiento(){ //tiempo en el que el enemigo se mueve 1 casilla
+	method velocidadDeMovimiento(valor){ //tiempo en el que el enemigo se mueve 1 casilla
 		
-		game.onTick(500, "movimientoEnemgio",{ self.movimiento() })
+		game.onTick(valor, "movimientoEnemgio",{ self.movimiento() })
 	}
 	
-	method velocidadDeAtaque(){ //tiempo en el que el enemigo lanza un ataque
+	method velocidadDeAtaque(valor){ //tiempo en el que el enemigo lanza un ataque
 		
-		game.onTick(700, "movimientoEnemgio",{ self.realizarAtaque() })
+		game.onTick(valor, "movimientoEnemgio",{ self.realizarAtaque() })
 	}
 	
-	method morir(){ 
-		if (not self.estaVivo()){
-			animaciones.morir(self)
-			game.schedule(2000, {game.removeVisual(self)})  //cambiar para que tambien funcione con cualquier enemigo
-		}
+	override method morir(){ 
+		animaciones.morir(self)
+		game.schedule(2000, {game.removeVisual(self)})  //cambiar para que tambien funcione con cualquier enemigo
+		goku.serAturdido(2000)
 	}
 
 }

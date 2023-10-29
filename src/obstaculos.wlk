@@ -9,7 +9,6 @@ class Obstaculo{
 	
 	method recibirAtaque(cant) {}
 	method serAturdido(tiempo) {}
-	method morir(){}
 	method position() = position
 	
 }
@@ -23,8 +22,8 @@ class CapsulaVida inherits Obstaculo{
 	
 	method image() = "assets/elementos/CapsulaVida.png"
 	
-	override method recibirAtaque(cant){ goku.vida( goku.vida() + 10 ) }
-	override method morir(){ 
+	override method recibirAtaque(cant){ 
+		goku.vida( 100.min(goku.vida() + 10 ))
 		game.removeVisual(self)
 		juego.eliminarCapsulaVida(self)
 	}
@@ -34,9 +33,9 @@ class CapsulaEnergia inherits Obstaculo{
 	
 	method image() = "assets/elementos/CapsulaEnergia.png"
 	
-	override method recibirAtaque(cant){ goku.energia( goku.energia() + 25 ) }
-	override method morir(){ 
+	override method recibirAtaque(cant){ 
+		goku.energia( 100.min(goku.energia() + 25) )
 		game.removeVisual(self)
-		juego.eliminarCapsulaEnergia(self)
+		juego.eliminarCapsulaVida(self)
 	}
 }

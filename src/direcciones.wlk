@@ -21,7 +21,6 @@ object frente {
 		
 		if (not game.getObjectsIn(entidad.position().down(1)).isEmpty()){
             game.getObjectsIn(entidad.position().down(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().down(1)).first().morir()
 
         }
 	}
@@ -30,7 +29,6 @@ object frente {
 		
 		if (entidad.position().down(1) == goku.position() and entidad.puedeMoverse() ){
 			game.getObjectsIn(entidad.position().down(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().down(1)).first().morir()
 			animaciones.golpear(entidad)
 		}
 	}
@@ -54,7 +52,6 @@ object atras {
 		
 		if (not game.getObjectsIn(entidad.position().up(1)).isEmpty()){
             game.getObjectsIn(entidad.position().up(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().up(1)).first().morir()
 
         }
 	}
@@ -63,7 +60,6 @@ object atras {
 		
 		if (entidad.position().up(1) == goku.position() and entidad.puedeMoverse() ){
 			game.getObjectsIn(entidad.position().up(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().up(1)).first().morir()
 			animaciones.golpear(entidad)
 		}
 	}
@@ -87,7 +83,6 @@ object derecha {
 		
 		if (not game.getObjectsIn(entidad.position().right(1)).isEmpty()){
             game.getObjectsIn(entidad.position().right(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().right(1)).first().morir()
 
         }
 	}
@@ -96,7 +91,6 @@ object derecha {
 		
 		if (entidad.position().right(1) == goku.position() and entidad.puedeMoverse() ){
 			game.getObjectsIn(entidad.position().right(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().right(1)).first().morir()
 			animaciones.golpear(entidad)
 		}
 	}
@@ -120,7 +114,6 @@ object izquierda {
 		
 		if (not game.getObjectsIn(entidad.position().left(1)).isEmpty()){
             game.getObjectsIn(entidad.position().left(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().left(1)).first().morir()
 
         }
 	}
@@ -129,7 +122,6 @@ object izquierda {
 		
 		if (entidad.position().left(1) == goku.position() and entidad.puedeMoverse() ){
 			game.getObjectsIn(entidad.position().left(1)).first().recibirAtaque(cant)
-            game.getObjectsIn(entidad.position().left(1)).first().morir()
 			animaciones.golpear(entidad)
 		}
 	}

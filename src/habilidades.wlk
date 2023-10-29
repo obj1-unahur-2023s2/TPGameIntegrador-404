@@ -30,29 +30,27 @@ class BolaDeEnergia {
 		if ( not game.getObjectsIn(position).isEmpty() and self.estaSobreUnEnemigoOObstaculo()){
 			game.removeTickEvent("movimientoBola")
 			game.getObjectsIn(position).first().recibirAtaque(goku.danio() / 2)
-			game.getObjectsIn(position).first().morir()
 			game.removeVisual(self)
 		}
 	}
 	
 	method estaSobreUnEnemigoOObstaculo() = 
-		juego.enemigos().any( {e => game.getObjectsIn(position).first() == e}) or juego.obstaculos().any( { o => o.position() == self.position()  } )
+		game.getObjectsIn(position).first() == freezer or juego.obstaculos().any( { o => o.position() == self.position()  } )
 }
 class BengalaSolar{
 	
 	method position() = goku.position()
 	
 	method aturdir(){
-		if ( not self.enemigosAlRededor().isEmpty()){
-			self.enemigosAlRededor().forEach({ e => e.serAturdido(2000) })
+		if ( self.hayEnemigoAlRededor()){
+			freezer.serAturdido(2000)
 			game.schedule(150,{game.removeVisual(self)})
 		}
 	}
 	
-	method enemigosAlRededor() = 
-		juego.enemigos().filter({ 
-			e => self.position().up(1) == e.position() or self.position().down(1) == e.position() or self.position().right(1) == e.position() or self.position().left(1) == e.position()
-		})	
+	method hayEnemigoAlRededor() = 
+		self.position().up(1) == freezer.position() or self.position().down(1) == freezer.position() or self.position().right(1) == freezer.position() or self.position().left(1) == freezer.position()
+
 }
 
 
