@@ -30,36 +30,38 @@ class EntidadesVivas{
 	method puedeMoverse() = not estaAturdido and self.estaVivo()
 	
 	
+	method cambiarDireccionHaciaLaQueMira(direccion){ if (self.puedeMoverse()) direccionHaciaLaQueMira = direccion}
+	
 	method caminarArriba() {
 		//el personaje avanza solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.up(1)).isEmpty() and not estaAturdido){
+		if (game.getObjectsIn(position.up(1)).isEmpty() and self.puedeMoverse()){
 			position = position.up(1)
 		}
-		direccionHaciaLaQueMira = atras
+		self.cambiarDireccionHaciaLaQueMira(atras)
 	}
 	
 	method caminarAbajo() {
 		//el personaje retrocede solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.down(1)).isEmpty() and not estaAturdido){
+		if (game.getObjectsIn(position.down(1)).isEmpty() and self.puedeMoverse()){
 			position = position.down(1)
 		}
-		direccionHaciaLaQueMira = frente
+		self.cambiarDireccionHaciaLaQueMira(frente)
 	}
 	
 	method caminarDerecha() {
 		//el personaje avanza a la derecha solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.right(1)).isEmpty() and not estaAturdido){
+		if (game.getObjectsIn(position.right(1)).isEmpty() and self.puedeMoverse()){
 			position = position.right(1)
 		}
-		direccionHaciaLaQueMira = derecha
+		self.cambiarDireccionHaciaLaQueMira(derecha)
 	}
 	
 	method caminarIzquierda() {
 		//el personaje avanza a la izquierda solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.left(1)).isEmpty() and not estaAturdido){
+		if (game.getObjectsIn(position.left(1)).isEmpty() and self.puedeMoverse()){
 			position = position.left(1)
 		}
-		direccionHaciaLaQueMira = izquierda
+		self.cambiarDireccionHaciaLaQueMira(izquierda)
 	}
 	 
     method serAturdido(tiempo){
@@ -75,21 +77,18 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	var property energia= 100
 	var property furia = 100
 	var estaTransformado = false
-	var danio = 100
-	
+	var danio = 20
 	
 	method energia()= energia
 	method danio() = danio
 	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
     
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
-		direccionHaciaLaQueMira.atacarHaciaLaDireccionQueMira(self)
-	}
-
-   method realizarAtaque(){ 
-        direccionHaciaLaQueMira.jugadorHacerDanioHaciaLaDireccionQueMira(self,danio)
+		if (not game.getObjectsIn(direccionHaciaLaQueMira.destino(self)).isEmpty() and self.puedeMoverse()){
+            game.getObjectsIn(direccionHaciaLaQueMira.destino(self)).first().recibirAtaque(danio)
+        }
         animaciones.golpear(self)
-    }
+	}
 	
 	
 	method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
@@ -103,7 +102,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 		else{ game.say(self,"No tengo suficiente energia")}
 		
 	}
-	
+			//usar(habilidad)
 	method usarBengalaSolar(){  //el personaje lanza una onda de luz que deja aturdido al enemigo, sin poder realizar una accion por un determinado tiempo
 		if ( energia >= 25 ){
 			const bengalaSolar = new BengalaSolar()
@@ -129,6 +128,10 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 		//por ahora no hace nada, se hara cuando se haga la pantalla de game over
 	}
 	
+	override method puedeMoverse() =
+		super() and
+		freezer.estaVivo()
+	
 }
 
 object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
@@ -146,10 +149,9 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 			 }
 			 self.caminarDerecha()
 		}
-		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){  //cambiar
-			 if (self.hayUnObstaculoALaIzquierda()){
-			 	self.esquivarObstaculo()
-			 }
+		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){
+			self.esquivarObstaculo()
+
 			self.caminarIzquierda()
 		}
 		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
@@ -162,8 +164,11 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 		}	
 	}
 	
-	method realizarAtaque(){ 
-        direccionHaciaLaQueMira.enemigoHacerDanioHaciaLaDireccionQueMira(self,danio)
+	method golpear(){ 
+        if (direccionHaciaLaQueMira.destino(self) == goku.position() and self.puedeMoverse() ){
+			game.getObjectsIn(direccionHaciaLaQueMira.destino(self) ).first().recibirAtaque(danio)
+			animaciones.golpear(self)
+		}
     }
 	
 	override method puedeMoverse(){ //el enemigo solo se puede mover si el jugador esta en un radio de 4 casillas de el
@@ -172,7 +177,8 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 			goku.position().y()-self.position().y().abs() <= 4 and
 			goku.position().x()-self.position().x() >= -4 and
 			goku.position().y()-self.position().y() >= -4 and
-			super()
+			super() and
+			goku.estaVivo()
 		}
 		
 	method esquivarObstaculo(){  // metodo para que el enemigo no se quede enganchado contra un obstaculo, y pase por al lado
@@ -211,7 +217,7 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	
 	method velocidadDeAtaque(valor){ //tiempo en el que el enemigo lanza un ataque
 		
-		game.onTick(valor, "movimientoEnemgio",{ self.realizarAtaque() })
+		game.onTick(valor, "ataqueEnemgio",{ self.golpear() })
 	}
 	
 	override method morir(){ 
@@ -219,6 +225,9 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 		game.schedule(2000, {game.removeVisual(self)})  //cambiar para que tambien funcione con cualquier enemigo
 		goku.serAturdido(2000)
 	}
+
+
+
 
 }
 

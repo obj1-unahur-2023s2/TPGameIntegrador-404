@@ -35,7 +35,7 @@ object juego{
 		game.boardGround("assets/mapaNamek.png")
 		game.addVisual(inicio)
 		keyboard.p().onPressDo{self.configurarFacil()}
-		keyboard.o().onPressDo{self.configurarDificil()}
+		keyboard.o().onPressDo{self.configurarDificil()} //cambiar a objetos
 		
 	}
 	method configurarFacil()
@@ -49,7 +49,7 @@ object juego{
 		freezer.velocidadDeAtaque(1000)
 		game.onTick(15000, "GenerarCapsulas", { self.generarCapsulaVidaSiEstaVacio(2) })
 		game.onTick(7500, "GenerarCapsulas", { self.generarCapsulaEnergiaSiEstaVacio(3) })
-		self.configurarEnemigo(100,2000)
+		self.configurarEnemigo(10,100)
 	}
 	method configurarDificil()
 	{

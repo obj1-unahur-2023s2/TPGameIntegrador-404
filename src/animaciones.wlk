@@ -16,7 +16,7 @@ object animaciones{
 		
 		entidad.accion("Kame")
 		game.schedule(100, {entidad.accion("Kame1")})
-		game.schedule(200, {entidad.accion("Kame2")})
+		game.schedule(200, {entidad.accion("Kame2")})							//cambiar a objetos
 		game.schedule(400, {entidad.accion("")})
 	}
 	
