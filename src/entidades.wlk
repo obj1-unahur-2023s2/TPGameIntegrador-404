@@ -94,7 +94,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
 		if( energia >= 10){
 			const bola = new BolaDeEnergia(position = position)
-			animaciones.disparar(self)
+			animaciones.disparar()
 			game.addVisual(bola)
 			direccionHaciaLaQueMira.desplazamiento(bola)
 			energia = 0.max(energia - 10)

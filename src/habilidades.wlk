@@ -39,13 +39,15 @@ class BolaDeEnergia {
 }
 class BengalaSolar{
 	
+	method image() = "ataques/Luz.png"
+	
 	method position() = goku.position()
 	
 	method aturdir(){
 		if ( self.hayEnemigoAlRededor()){
 			freezer.serAturdido(2000)
-			game.schedule(150,{game.removeVisual(self)})
 		}
+		game.schedule(150,{game.removeVisual(self)})
 	}
 	
 	method hayEnemigoAlRededor() = 

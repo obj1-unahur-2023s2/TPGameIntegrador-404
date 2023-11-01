@@ -6,18 +6,20 @@ object animaciones{
 	
 	method golpear(entidad){ //animacion de golpe
 		
+		entidad.serAturdido(400)
 		entidad.accion("Golpe")
 		(1..3).forEach( { n => game.schedule( 100 * n, { entidad.accion("golpe" + n.toString()) } ) } )
 		game.schedule(400, {entidad.accion("")})
 		
 	}
 	
-	method disparar(entidad){ //animacion de lanzar kame
+	method disparar(){ //animacion de lanzar kame
 		
-		entidad.accion("Kame")
-		game.schedule(100, {entidad.accion("Kame1")})
-		game.schedule(200, {entidad.accion("Kame2")})							//cambiar a objetos
-		game.schedule(400, {entidad.accion("")})
+		goku.serAturdido(400)
+		goku.accion("Kame")
+		game.schedule(100, {goku.accion("Kame1")})
+		game.schedule(200, {goku.accion("Kame2")})							//cambiar a objetos
+		game.schedule(400, {goku.accion("")})
 	}
 	
 	method transformacion(){  //animacion de transformacion
