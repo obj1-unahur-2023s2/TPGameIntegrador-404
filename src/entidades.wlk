@@ -8,7 +8,7 @@ import direcciones.*
 
 class EntidadesVivas{
 	
-	var position
+	var property position
 	var property vida 
 	var property direccionHaciaLaQueMira = frente
 	var property accion = ""
@@ -28,7 +28,6 @@ class EntidadesVivas{
 	}
 		
 	method puedeMoverse() = not estaAturdido and self.estaVivo()
-	
 	
 	method cambiarDireccionHaciaLaQueMira(direccion){ if (self.puedeMoverse()) direccionHaciaLaQueMira = direccion}
 	
@@ -125,7 +124,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	}
 	
 	override method morir(){ 
-		game.schedule(2000, {derrota.configurar()})
+		game.schedule(2000, {pantallaDerrota.mostrar()})
 	}
 	
 	override method puedeMoverse() =
@@ -223,7 +222,7 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	override method morir(){ 
 		animaciones.morir(self)
 		goku.serAturdido(2000)
-		game.schedule(2000, {victoria.configurar()})
+		game.schedule(2000, {pantallaVictoria.mostrar()})
 	}
 
 

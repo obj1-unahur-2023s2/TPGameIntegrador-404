@@ -3,11 +3,13 @@ import entidades.*
 import indicadores.*
 import obstaculos.*
 import pantallas.*
+import dificultades.*
+import direcciones.*
 
 object juego{
 	
 	const obstaculos = [
-		new Arbol(position = game.at(10,10)), new Arbol(position = game.at(14,6)), new Arbol(position = game.at(6,5)), new Arbol(position = game.at(18,11))
+		new Arbol(position = game.at(8,10)), new Arbol(position = game.at(14,6)), new Arbol(position = game.at(6,5)), new Arbol(position = game.at(18,11))
 	]
 	
 	
@@ -16,7 +18,11 @@ object juego{
 	
 	const bordes = []
 	
+	method capsulas() = (capsulasVida + capsulasEnergia).any({ c => c.position() == goku.direccionHaciaLaQueMira().destino(goku) })
+	
 	method obstaculos() = obstaculos
+	
+	method bordes() = bordes
 	
 	method eliminarCapsulaVida(capsula){
 		
@@ -36,7 +42,7 @@ object juego{
 		game.addVisual(inicioPantalla)
 		keyboard.p().onPressDo{facil.configurar()}
 		keyboard.o().onPressDo{dificil.configurar()}
-		keyboard.i().onPressDo{reglas.configurar()}
+		keyboard.i().onPressDo{pantallaReglas.mostrar()}
 		
 	}
 	
@@ -89,22 +95,22 @@ object juego{
 	method posicionAleatoria() = game.at( 2.randomUpTo(20), 3.randomUpTo(13) )
 
 
-	method generarCapsulaVida(maxCapsula){
+	method generarCapsulaVida(maxCapsula, posicion){
 		
 		if (capsulasVida.size() < maxCapsula) {
-			const nuevaCapsula = new CapsulaVida(position = self.posicionAleatoria())
-			game.addVisual(nuevaCapsula)
+			const nuevaCapsula = new CapsulaVida(position = posicion)
 			capsulasVida.add(nuevaCapsula)
+			game.addVisual(nuevaCapsula)
 			obstaculos.forEach({a => game.removeVisual(a)})
 			obstaculos.forEach({a => game.addVisual(a)})
 		}
 	}
-	method generarCapsulaEnergia(maxCapsula){
+	method generarCapsulaEnergia(maxCapsula, posicion){
 		
 		if (capsulasEnergia.size() < maxCapsula) {
-			const nuevaCapsula = new CapsulaEnergia(position = self.posicionAleatoria())
-			game.addVisual(nuevaCapsula)
+			const nuevaCapsula = new CapsulaEnergia(position = posicion)
 			capsulasEnergia.add(nuevaCapsula)
+			game.addVisual(nuevaCapsula)
 			obstaculos.forEach({a => game.removeVisual(a)})
 			obstaculos.forEach({a => game.addVisual(a)})
 		}
@@ -112,58 +118,22 @@ object juego{
 	method generarCapsulaVidaSiEstaVacio(maxCapsula){
 		var posicion = new Position(x=2.randomUpTo(20),y=3.randomUpTo(13))
 		if(game.getObjectsIn(posicion).isEmpty())
-            self.generarCapsulaVida(maxCapsula)
+            self.generarCapsulaVida(maxCapsula, posicion)
         else
             self.generarCapsulaVidaSiEstaVacio(maxCapsula)
 	}
 	method generarCapsulaEnergiaSiEstaVacio(maxCapsula){
 		var posicion = new Position(x=2.randomUpTo(20),y=3.randomUpTo(13))
 		if(game.getObjectsIn(posicion).isEmpty())
-            self.generarCapsulaEnergia(maxCapsula)
+            self.generarCapsulaEnergia(maxCapsula, posicion)
         else
             self.generarCapsulaEnergiaSiEstaVacio(maxCapsula)
 	}
-	
-	method configurarEnemigo(danio, vida, vMovimiento, vDanio){
-		freezer.danio(danio)
-		freezer.vida(vida)
-		freezer.velocidadDeMovimiento(vMovimiento)
-		freezer.velocidadDeAtaque(vDanio)
-	}
 }
-object facil
+
+object pantallaVictoria
 {
-	method configurar()
-	{
-		game.clear()
-		game.height(16)
-		game.width(22)
-		juego.bordesDelMapa()
-		juego.agregarVisuales()
-		juego.configurarTeclas()
-		game.onTick(10000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
-		game.onTick(7000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
-		juego.configurarEnemigo(10,500, 400, 800)
-	}
-}
-object dificil
-{
-	method configurar()
-	{
-		game.clear()
-		game.height(16)
-		game.width(22)
-		juego.bordesDelMapa()
-		juego.agregarVisuales()
-		juego.configurarTeclas()
-		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(2) })
-		game.onTick(7500, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(2) })
-		juego.configurarEnemigo(25,1000, 600, 1000)
-	}
-}
-object victoria
-{
-	method configurar()
+	method mostrar()
 	{
 		game.clear()
 		game.height(16)
@@ -173,9 +143,9 @@ object victoria
 		keyboard.o().onPressDo{juego.iniciar()}
 	}
 }
-object derrota
+object pantallaDerrota
 {
-	method configurar()
+	method mostrar()
 	{
 		game.clear()
 		game.height(16)
@@ -185,9 +155,9 @@ object derrota
 		keyboard.o().onPressDo{juego.iniciar()}
 	}
 }
-object reglas
+object pantallaReglas
 {
-	method configurar()
+	method mostrar()
 	{
 		game.clear()
 		game.height(16)
@@ -196,6 +166,5 @@ object reglas
 		keyboard.p().onPressDo{juego.iniciar()}
 	}
 }
-
 
 

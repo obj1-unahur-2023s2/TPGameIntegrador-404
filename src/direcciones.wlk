@@ -18,6 +18,7 @@ object frente {
 	}
 	
 	method destino(entidad) = entidad.position().down(1)
+
 }
 
 object atras {
