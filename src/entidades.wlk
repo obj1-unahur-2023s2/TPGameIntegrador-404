@@ -12,6 +12,7 @@ class EntidadesVivas{
 	var property vida 
 	var property direccionHaciaLaQueMira = frente
 	var property accion = ""
+	var property danio = 0
 	var estaAturdido = false
 	
 
@@ -75,11 +76,9 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	
 	var property energia= 100
 	var property furia = 0
-	var estaTransformado = false
-	var danio = 20
+	var property estaTransformado = false
 	
 	method energia()= energia
-	method danio() = danio
 	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
     
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
@@ -134,8 +133,6 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 }
 
 object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
-	
-	var property danio = 0
 	
 	
 	override method image() = "assets/enemigos/enemigo" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"

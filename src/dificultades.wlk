@@ -16,7 +16,8 @@ object facil
 		game.onTick(10000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
 		game.onTick(7000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
 		configuracion.configurarEnemigo(10,500, 400, 800)
-		configuracion.configurarPosicionesIniciales()
+		configuracion.configurarJugador(25)
+		configuracion.configurarEstadoInicial()
 	}
 }
 object dificil
@@ -32,7 +33,8 @@ object dificil
 		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(2) })
 		game.onTick(7500, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(2) })
 		configuracion.configurarEnemigo(25,1000, 600, 1000)
-		configuracion.configurarPosicionesIniciales()
+		configuracion.configurarJugador(20)
+		configuracion.configurarEstadoInicial()
 	}
 }
 
@@ -45,7 +47,16 @@ object configuracion{
 		freezer.velocidadDeAtaque(vDanio)
 	}
 	
-	method configurarPosicionesIniciales(){
+	method configurarJugador(danio){
+		goku.danio(danio)
+		goku.estaTransformado(false)
+		goku.vida(100)
+		goku.furia(0)
+		goku.energia(100)
+	}
+	
+	method configurarEstadoInicial(){
+		
 		goku.position(game.at(10,10))
 		goku.accion("")
 		goku.direccionHaciaLaQueMira(frente)
