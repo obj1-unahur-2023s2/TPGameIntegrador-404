@@ -32,36 +32,12 @@ object juego{
 		game.height(16)
 		game.width(22)
 		game.title("The Legend Of SuperSaiyan")
-		game.boardGround("assets/mapaNamek.png")
-		game.addVisual(inicio)
-		keyboard.p().onPressDo{self.configurarFacil()}
-		keyboard.o().onPressDo{self.configurarDificil()} //cambiar a objetos
+		game.boardGround("assets/pantallas/mapaNamek.png")
+		game.addVisual(inicioPantalla)
+		keyboard.p().onPressDo{facil.configurar()}
+		keyboard.o().onPressDo{dificil.configurar()}
+		keyboard.i().onPressDo{reglas.configurar()}
 		
-	}
-	method configurarFacil()
-	{
-		game.clear()
-		
-		self.bordesDelMapa()
-		self.agregarVisuales()
-		self.configurarTeclas()
-		freezer.velocidadDeMovimiento(600)
-		freezer.velocidadDeAtaque(1000)
-		game.onTick(15000, "GenerarCapsulas", { self.generarCapsulaVidaSiEstaVacio(2) })
-		game.onTick(7500, "GenerarCapsulas", { self.generarCapsulaEnergiaSiEstaVacio(3) })
-		self.configurarEnemigo(10,100)
-	}
-	method configurarDificil()
-	{
-		game.clear()
-		
-		
-		self.bordesDelMapa()
-		self.agregarVisuales()
-		self.configurarTeclas()
-		
-		freezer.velocidadDeMovimiento(400)
-		freezer.velocidadDeAtaque(700)
 	}
 	
 	method agregarVisuales(){
@@ -148,12 +124,78 @@ object juego{
             self.generarCapsulaEnergiaSiEstaVacio(maxCapsula)
 	}
 	
-	method configurarEnemigo(danio, vida){
+	method configurarEnemigo(danio, vida, vMovimiento, vDanio){
 		freezer.danio(danio)
 		freezer.vida(vida)
+		freezer.velocidadDeMovimiento(vMovimiento)
+		freezer.velocidadDeAtaque(vDanio)
 	}
 }
-
+object facil
+{
+	method configurar()
+	{
+		game.clear()
+		game.height(16)
+		game.width(22)
+		juego.bordesDelMapa()
+		juego.agregarVisuales()
+		juego.configurarTeclas()
+		game.onTick(10000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
+		game.onTick(7000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
+		juego.configurarEnemigo(10,500, 400, 800)
+	}
+}
+object dificil
+{
+	method configurar()
+	{
+		game.clear()
+		game.height(16)
+		game.width(22)
+		juego.bordesDelMapa()
+		juego.agregarVisuales()
+		juego.configurarTeclas()
+		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(2) })
+		game.onTick(7500, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(2) })
+		juego.configurarEnemigo(25,1000, 600, 1000)
+	}
+}
+object victoria
+{
+	method configurar()
+	{
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(victoriaPantalla)
+		keyboard.p().onPressDo{facil.configurar()}
+		keyboard.o().onPressDo{juego.iniciar()}
+	}
+}
+object derrota
+{
+	method configurar()
+	{
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(derrotaPantalla)
+		keyboard.p().onPressDo{facil.configurar()}
+		keyboard.o().onPressDo{juego.iniciar()}
+	}
+}
+object reglas
+{
+	method configurar()
+	{
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(reglasPantalla)
+		keyboard.p().onPressDo{juego.iniciar()}
+	}
+}
 
 
 

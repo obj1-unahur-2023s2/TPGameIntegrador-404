@@ -75,7 +75,7 @@ class EntidadesVivas{
 object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	
 	var property energia= 100
-	var property furia = 100
+	var property furia = 0
 	var estaTransformado = false
 	var danio = 20
 	
@@ -125,7 +125,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	}
 	
 	override method morir(){ 
-		//por ahora no hace nada, se hara cuando se haga la pantalla de game over
+		game.schedule(2000, {derrota.configurar()})
 	}
 	
 	override method puedeMoverse() =
@@ -222,8 +222,8 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	
 	override method morir(){ 
 		animaciones.morir(self)
-		game.schedule(2000, {game.removeVisual(self)})  //cambiar para que tambien funcione con cualquier enemigo
 		goku.serAturdido(2000)
+		game.schedule(2000, {victoria.configurar()})
 	}
 
 

@@ -6,4 +6,7 @@ class Pantalla
 	var property position 
 	
 }
-object inicio inherits Pantalla(image = "assets/Victoria.png", position = game.at(0,0)){}
+object inicioPantalla inherits Pantalla(image = "assets/pantallas/Inicio.png", position = game.origin()){}
+object victoriaPantalla inherits Pantalla(image = "assets/pantallas/Victoria.png", position = game.origin()){}
+object derrotaPantalla inherits Pantalla(image = "assets/pantallas/GameOver.png", position = game.origin()){}
+object reglasPantalla inherits Pantalla(image = "assets/pantallas/Instrucciones.png", position = game.origin()){}
