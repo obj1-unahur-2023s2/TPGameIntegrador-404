@@ -18,7 +18,7 @@ object juego{
 	
 	const bordes = []
 	
-	method capsulas() = (capsulasVida + capsulasEnergia).any({ c => c.position() == goku.direccionHaciaLaQueMira().destino(goku) })
+	method capsulas() = (capsulasVida + capsulasEnergia)
 	
 	method obstaculos() = obstaculos
 	

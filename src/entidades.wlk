@@ -32,36 +32,38 @@ class EntidadesVivas{
 	
 	method cambiarDireccionHaciaLaQueMira(direccion){ if (self.puedeMoverse()) direccionHaciaLaQueMira = direccion}
 	
+	method hayUnaCapsulaAdelante() = juego.capsulas().contains(game.getObjectsIn(direccionHaciaLaQueMira.destino(self)).first())
+	
 	method caminarArriba() {
 		//el personaje avanza solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.up(1)).isEmpty() and self.puedeMoverse()){
+		self.cambiarDireccionHaciaLaQueMira(atras)
+		if ((game.getObjectsIn(position.up(1)).isEmpty() or self.hayUnaCapsulaAdelante() ) and self.puedeMoverse()){
 			position = position.up(1)
 		}
-		self.cambiarDireccionHaciaLaQueMira(atras)
 	}
 	
 	method caminarAbajo() {
 		//el personaje retrocede solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.down(1)).isEmpty() and self.puedeMoverse()){
+		self.cambiarDireccionHaciaLaQueMira(frente)
+		if ((game.getObjectsIn(position.down(1)).isEmpty() or self.hayUnaCapsulaAdelante() )and self.puedeMoverse()){
 			position = position.down(1)
 		}
-		self.cambiarDireccionHaciaLaQueMira(frente)
 	}
 	
 	method caminarDerecha() {
 		//el personaje avanza a la derecha solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.right(1)).isEmpty() and self.puedeMoverse()){
+		self.cambiarDireccionHaciaLaQueMira(derecha)
+		if ((game.getObjectsIn(position.right(1)).isEmpty() or self.hayUnaCapsulaAdelante()) and self.puedeMoverse()){
 			position = position.right(1)
 		}
-		self.cambiarDireccionHaciaLaQueMira(derecha)
 	}
 	
 	method caminarIzquierda() {
 		//el personaje avanza a la izquierda solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
-		if (game.getObjectsIn(position.left(1)).isEmpty() and self.puedeMoverse()){
+		self.cambiarDireccionHaciaLaQueMira(izquierda)
+		if ((game.getObjectsIn(position.left(1)).isEmpty() or self.hayUnaCapsulaAdelante()) and self.puedeMoverse()){
 			position = position.left(1)
 		}
-		self.cambiarDireccionHaciaLaQueMira(izquierda)
 	}
 	 
     method serAturdido(tiempo){
