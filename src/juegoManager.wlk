@@ -12,7 +12,8 @@ object juego{
 		new Arbol(position = game.at(8,10)), new Arbol(position = game.at(14,6)), new Arbol(position = game.at(6,5)), new Arbol(position = game.at(18,11))
 	]
 	
-	
+	var dificultad
+	 
 	const capsulasVida = []
 	const capsulasEnergia = []
 	
@@ -40,8 +41,14 @@ object juego{
 		game.title("The Legend Of SuperSaiyan")
 		game.boardGround("assets/pantallas/mapaNamek.png")
 		game.addVisual(inicioPantalla)
-		keyboard.p().onPressDo{facil.configurar()}
-		keyboard.o().onPressDo{dificil.configurar()}
+		keyboard.p().onPressDo{
+			facil.configurar()
+			dificultad = facil
+		}
+		keyboard.o().onPressDo{
+			dificil.configurar()
+			dificultad = dificil
+		}
 		keyboard.i().onPressDo{pantallaReglas.mostrar()}
 		
 	}
@@ -129,6 +136,7 @@ object juego{
         else
             self.generarCapsulaEnergiaSiEstaVacio(maxCapsula)
 	}
+	method dificultad() = dificultad
 }
 
 object pantallaVictoria
@@ -139,7 +147,7 @@ object pantallaVictoria
 		game.height(16)
 		game.width(22)
 		game.addVisual(victoriaPantalla)
-		keyboard.p().onPressDo{facil.configurar()}
+		keyboard.p().onPressDo{juego.dificultad().configurar()}
 		keyboard.o().onPressDo{juego.iniciar()}
 	}
 }
@@ -151,7 +159,7 @@ object pantallaDerrota
 		game.height(16)
 		game.width(22)
 		game.addVisual(derrotaPantalla)
-		keyboard.p().onPressDo{facil.configurar()}
+		keyboard.p().onPressDo{juego.dificultad().configurar()}
 		keyboard.o().onPressDo{juego.iniciar()}
 	}
 }
