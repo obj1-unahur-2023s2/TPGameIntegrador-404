@@ -34,6 +34,8 @@ class BolaDeEnergia {
 		}
 	}
 	
+	method serAgarrado(entidad){}
+	
 	method estaSobreUnEnemigoOObstaculo() = 
 		game.getObjectsIn(position).first() == freezer or juego.obstaculos().any( { o => o.position() == self.position()  } )
 }
@@ -49,6 +51,8 @@ class BengalaSolar{
 		}
 		game.schedule(150,{game.removeVisual(self)})
 	}
+	
+	method serAgarrado(entidad){}
 	
 	method hayEnemigoAlRededor() = 
 		self.position().up(1) == freezer.position() or self.position().down(1) == freezer.position() or self.position().right(1) == freezer.position() or self.position().left(1) == freezer.position()

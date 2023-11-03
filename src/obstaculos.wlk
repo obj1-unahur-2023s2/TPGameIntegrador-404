@@ -22,19 +22,20 @@ class CapsulaVida inherits Obstaculo{
 	
 	method image() = "assets/elementos/CapsulaVida.png"
 	
-	override method recibirAtaque(cant){ 
-		goku.vida( 100.min(goku.vida() + 10 ))
+	method serAgarrado(entidad){ 
+		entidad.vida( 100.min(entidad.vida() + 10 ))
 		game.removeVisual(self)
 		juego.eliminarCapsulaVida(self)
 	}
+	
 }
 
 class CapsulaEnergia inherits Obstaculo{
 	
 	method image() = "assets/elementos/CapsulaEnergia.png"
 	
-	override method recibirAtaque(cant){ 
-		goku.energia( 100.min(goku.energia() + 25) )
+	method serAgarrado(entidad){ 
+		entidad.energia( 100.min(entidad.energia() + 25) )
 		game.removeVisual(self)
 		juego.eliminarCapsulaVida(self)
 	}

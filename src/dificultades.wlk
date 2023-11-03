@@ -53,6 +53,7 @@ object configuracion{
 		goku.vida(100)
 		goku.furia(0)
 		goku.energia(100)
+		game.onCollideDo(goku,{algo => algo.serAgarrado(goku)})
 	}
 	
 	method configurarEstadoInicial(){
