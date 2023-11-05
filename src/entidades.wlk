@@ -142,7 +142,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	
 	
-	override method image() = "assets/enemigos/enemigo" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
+	override method image() = "assets/freezer/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
 	
 	method movimiento(){ //el enemigo se mueve hacia donde esta el jugador
 		
