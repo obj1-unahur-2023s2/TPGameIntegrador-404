@@ -9,7 +9,13 @@ Luca La Fuente
 
 ## Capturas
 
-(agregar)
+Portada del juego:
+![portada](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/6b83a048-e4e1-471e-93be-d1a6c04e0ba3)
+
+In Game:
+
+![inGame](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/1d4b0537-1f2e-426d-88b8-82e86650c042)
+
 
 ## Reglas de Juego / Instrucciones
 
