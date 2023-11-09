@@ -129,7 +129,8 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 		}
 	}
 	
-	override method morir(){ 
+	override method morir(){
+		animaciones.morir(self)
 		game.schedule(2000, {pantallaDerrota.mostrar()})
 	}
 	
@@ -225,7 +226,6 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	
 	override method morir(){ 
 		animaciones.morir(self)
-		goku.serAturdido(2000)
 		game.schedule(2000, {pantallaVictoria.mostrar()})
 	}
 
