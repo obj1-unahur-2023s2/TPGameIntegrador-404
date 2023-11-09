@@ -19,6 +19,17 @@ In Game:
 
 ## Reglas de Juego / Instrucciones
 
+El objetivo del juego es matar a freezer, el cual tiene una fuerza variante dependiendo de la dificultad elegida.
+
+Para cumplir el objetivo el jugador tiene varias habilidades:
+
+Golpe: Realiza un golpe hacia la celda de enfrente en la que esta mirando el jugador.
+Kamehameha: Es un ataque a distancia que va en liena recta hacia la celda que esta mirando el jugador, hasta chocar contra el enemigo o algun obstaculo.
+BengalaSolar: Es una habilidad de ayuda que aturde al enemigo, cuando el enemigo esta aturdido no puede atacar ni moverse.
+Transformacion: El personaje tiene una barra de "Furia" la cual se carga al recibir daño o al realizarlo, cuando la barra esta completa, 
+el personaje se puede transformar en super saiyajin. El personaje al transformarse multiplica su daño x2.
+
+Instrucciones:
 ![Instrucciones](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/31d95548-9a5c-4d6a-bc79-a4055a8a4572)
 
 
