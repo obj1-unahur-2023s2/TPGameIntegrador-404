@@ -89,10 +89,10 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
     
 	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
-		if (not game.getObjectsIn(direccionHaciaLaQueMira.destino(self)).isEmpty() and self.puedeMoverse()){
-            game.getObjectsIn(direccionHaciaLaQueMira.destino(self)).first().recibirAtaque(danio)
+		if (self.puedeMoverse()){
+            direccionHaciaLaQueMira.atacarHaciaLaDireccionQueMira(self)
+            animaciones.golpear(self)
         }
-        animaciones.golpear(self)
 	}
 	
 	

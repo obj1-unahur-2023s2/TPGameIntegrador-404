@@ -6,7 +6,7 @@ object animaciones{
 	
 	method golpear(entidad){ //animacion de golpe
 		
-		entidad.serAturdido(1000)
+		entidad.serAturdido(450)
 		entidad.accion("Golpe")
 		(1..3).forEach( { n => game.schedule( 100 * n, { entidad.accion("golpe" + n.toString()) } ) } )
 		game.schedule(400, {entidad.accion("")})

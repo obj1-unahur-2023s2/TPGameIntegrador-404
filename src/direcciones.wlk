@@ -9,7 +9,9 @@ object frente {
 	
 	method atacarHaciaLaDireccionQueMira(entidad){
 		
-		entidad.realizarAtaque()
+		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
+			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
+		}
 	}
 	
 	method desplazamiento(bolaDeEnergia){
@@ -27,7 +29,9 @@ object atras {
 	
 	method atacarHaciaLaDireccionQueMira(entidad){
 		
-		entidad.realizarAtaque()
+		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
+			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
+		}
 	}
 	
 	method desplazamiento(bolaDeEnergia){
@@ -44,7 +48,9 @@ object derecha {
 	
 	method atacarHaciaLaDireccionQueMira(entidad){
 		
-		entidad.realizarAtaque()
+		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
+			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
+		}
 	}
 	
 	method desplazamiento(bolaDeEnergia){
@@ -61,7 +67,9 @@ object izquierda {
 	
 	method atacarHaciaLaDireccionQueMira(entidad){
 		
-		entidad.realizarAtaque()
+		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
+			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
+		}
 	}
 	
 	method desplazamiento(bolaDeEnergia){
