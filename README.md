@@ -13,7 +13,7 @@ Luca La Fuente
 
 ## Reglas de Juego / Instrucciones
 
-(Escribirlas)
+![Instrucciones](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/31d95548-9a5c-4d6a-bc79-a4055a8a4572)
 
 
 ## Otros
