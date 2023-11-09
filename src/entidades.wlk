@@ -97,19 +97,19 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	
 	
 	method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
-		if( energia >= 10){
+		if( energia >= 15){
 			const bola = new BolaDeEnergia(position = direccionHaciaLaQueMira.destino(self))
 			animaciones.disparar()
 			game.addVisual(bola)
 			direccionHaciaLaQueMira.desplazamiento(bola)
 			energia = 0.max(energia - 10)
-			}
+		}
 		else{ game.say(self,"No tengo suficiente energia")}
 		
 	}
 			//usar(habilidad)
 	method usarBengalaSolar(){  //el personaje lanza una onda de luz que deja aturdido al enemigo, sin poder realizar una accion por un determinado tiempo
-		if ( energia >= 25 ){
+		if ( energia >= 25){
 			const bengalaSolar = new BengalaSolar()
 			game.addVisual(bengalaSolar)
 			bengalaSolar.aturdir()
@@ -148,24 +148,29 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	method movimiento(){ //el enemigo se mueve hacia donde esta el jugador
 		
 		if (goku.position().x() > self.position().x() and self.puedeMoverse()){
+			 self.caminarDerecha()
 			if (self.hayUnObstaculoALaDerecha()){
 			 	self.esquivarObstaculo()
 			 }
-			 self.caminarDerecha()
 		}
 		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){
-			self.esquivarObstaculo()
-
 			self.caminarIzquierda()
+			if (self.hayUnObstaculoALaIzquierda()){
+			 	self.esquivarObstaculo()
+			 }
 		}
 		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
 			self.caminarArriba()
-			self.esquivarObstaculo()
+			if (self.hayUnObstaculoArriba()){
+				self.esquivarObstaculo()	
+			}
 		}
 		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
 			self.caminarAbajo()
-			self.esquivarObstaculo()
-		}	
+			if (self.hayUnObstaculoAbajo()){
+				self.esquivarObstaculo()	
+			}
+		}
 	}
 	
 	method golpear(){ 
@@ -200,12 +205,10 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 		else if(self.hayUnObstaculoALaDerecha())
 			{
 				self.caminarAbajo()
-				self.caminarIzquierda()
 			}
 		else if(self.hayUnObstaculoALaIzquierda())
 			{
 				self.caminarArriba()
-				self.caminarDerecha()
 			}
 	}
 	
