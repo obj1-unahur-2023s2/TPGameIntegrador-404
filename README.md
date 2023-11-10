@@ -3,7 +3,7 @@
 
 ## Equipo de desarrollo
 
-Lionel Betancor
+Uriel Bravo
 
 Luca La Fuente
 
