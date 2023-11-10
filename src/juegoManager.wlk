@@ -59,6 +59,7 @@ object juego{
 		game.addVisual(barraDeVida)
 		game.addVisual(barraDeEnergia)
 		game.addVisual(barraDeFuria)
+		game.addVisual(barraDeEnemigo)
 		obstaculos.forEach({a => game.addVisual(a)})
 		bordes.forEach({b => game.addVisual(b)})
 		

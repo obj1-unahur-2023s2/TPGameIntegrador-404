@@ -26,8 +26,16 @@ object barraDeFuria{
 	
 	method calculoFuria() = ((goku.furia() / 10).truncate(0)*10 ).toString()	
 }
+object barraDeEnemigo{
+	method position()= game.at(12,14)
+	method image() = "indicadores/barraDeVidaEnemigo"+ calculo2.indicarBarra(freezer.vida()) +".png"
+	
+}
 
 object calculo{
 	
 	method indicarBarra(tipoBarra) = ((tipoBarra / 10).truncate(0)*10 ).toString()
+}
+object calculo2{
+	method indicarBarra(tipoBarra) = ((tipoBarra / 100).truncate(0)*10 ).toString()
 }
