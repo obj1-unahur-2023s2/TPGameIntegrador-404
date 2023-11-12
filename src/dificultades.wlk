@@ -44,7 +44,7 @@ object facil inherits Dificultad
 		juego.configurarTeclas()
 		game.onTick(10000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
 		game.onTick(7000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
-		configuracion.configurarEnemigo(0,500, 600, 1000)
+		configuracion.configurarEnemigo(10,500, 600, 1000)
 		configuracion.configurarJugador(25,100)
 		configuracion.configurarEstadoInicial()
 		self.agregarVisualesIndicadores()
@@ -69,7 +69,7 @@ object dificil inherits Dificultad
 		juego.configurarTeclas()
 		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(2) })
 		game.onTick(7500, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(2) })
-		configuracion.configurarEnemigo(25,1000, 400, 800)
+		configuracion.configurarEnemigo(20,1000, 400, 800)
 		configuracion.configurarJugador(20,100)
 		configuracion.configurarEstadoInicial()
 		self.agregarVisualesIndicadores()
@@ -140,7 +140,7 @@ object configuracion{
 	method configurarJugadorParaUnoVsUno(){
 		self.configurarJugador(10,500)
 		freezer.danio(15)
-		freezer.vida(500)
+		freezer.vida(540)
 		freezer.energia(100)
 		game.onCollideDo(freezer,{algo => algo.serAgarrado(freezer)})
 		
