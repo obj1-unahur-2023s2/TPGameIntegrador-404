@@ -6,7 +6,8 @@ import animaciones.*
 class BolaDeEnergia {
 	
 	var position
-	method image() = "ataques/bolaDeEnergia.png"
+	const usuario
+	method image() = "ataques/" + usuario.toString() +"BolaDeEnergia.png"
 	method position() = position
 	
 	method moverseDerecha(){
@@ -37,17 +38,19 @@ class BolaDeEnergia {
 	method serAgarrado(entidad){}
 	
 	method estaSobreUnEnemigoOObstaculo() = 
-		game.getObjectsIn(position).first() == freezer or juego.obstaculos().any( { o => o.position() == self.position()  } )
+		game.getObjectsIn(position).first() == usuario.enemigo() or juego.obstaculos().any( { o => o.position() == self.position()  } )
 }
 class BengalaSolar{
 	
+	const usuario
+	
 	method image() = "ataques/Luz.png"
 	
-	method position() = goku.position()
+	method position() = usuario.position()
 	
 	method aturdir(){
 		if ( self.hayEnemigoAlRededor()){
-			freezer.serAturdido(2000)
+			usuario.enemigo().serAturdido(2000)
 		}
 		game.schedule(150,{game.removeVisual(self)})
 	}
@@ -55,7 +58,10 @@ class BengalaSolar{
 	method serAgarrado(entidad){}
 	
 	method hayEnemigoAlRededor() = 
-		self.position().up(1) == freezer.position() or self.position().down(1) == freezer.position() or self.position().right(1) == freezer.position() or self.position().left(1) == freezer.position()
+		usuario.position().up(1) == usuario.enemigo().position() or
+		usuario.position().down(1) == usuario.enemigo().position() or
+		usuario.position().right(1) == usuario.enemigo().position() or
+		usuario.position().left(1) == usuario.enemigo().position()
 
 }
 

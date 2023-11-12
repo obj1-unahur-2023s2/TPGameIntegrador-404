@@ -9,7 +9,8 @@ import direcciones.*
 class EntidadesVivas{
 	
 	var property position
-	var property vida 
+	var property vida
+	var property energia = 100
 	var property direccionHaciaLaQueMira = frente
 	var property accion = ""
 	var property danio = 0
@@ -33,7 +34,7 @@ class EntidadesVivas{
 		
 	}
 		
-	method puedeMoverse() = not estaAturdido and self.estaVivo()
+	method puedeMoverse() = not estaAturdido and self.estaVivo() and self.enemigo().estaVivo()
 	
 	method cambiarDireccionHaciaLaQueMira(direccion){ if (self.puedeMoverse()) direccionHaciaLaQueMira = direccion}
 	
@@ -77,29 +78,18 @@ class EntidadesVivas{
     } //esta funcion tiene inplementado el tiempo, ya que se usara para la habilidad "Bengala Solar" la cual aturde a los enemigos "x" segundos
     
     method morir()
-}
-
-object goku inherits EntidadesVivas(position = game.center(), vida = 100){
-	
-	var property energia= 100
-	var property furia = 0
-	var property estaTransformado = false
-	
-	method energia()= energia
-	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
     
-	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
+   	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
 		if (self.puedeMoverse()){
             direccionHaciaLaQueMira.atacarHaciaLaDireccionQueMira(self)
             animaciones.golpear(self)
         }
 	}
-	
-	
-	method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
+    
+    method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
 		if( energia >= 15){
-			const bola = new BolaDeEnergia(position = direccionHaciaLaQueMira.destino(self))
-			animaciones.disparar()
+			const bola = new BolaDeEnergia(position = direccionHaciaLaQueMira.destino(self), usuario = self)
+			animaciones.disparar(self)
 			game.addVisual(bola)
 			direccionHaciaLaQueMira.desplazamiento(bola)
 			energia = 0.max(energia - 10)
@@ -110,13 +100,23 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 			//usar(habilidad)
 	method usarBengalaSolar(){  //el personaje lanza una onda de luz que deja aturdido al enemigo, sin poder realizar una accion por un determinado tiempo
 		if ( energia >= 25){
-			const bengalaSolar = new BengalaSolar()
+			const bengalaSolar = new BengalaSolar(usuario = self)
 			game.addVisual(bengalaSolar)
 			bengalaSolar.aturdir()
 			energia = 0.max(energia - 25)
 		}
 		else{ game.say(self, "No tengo suficiente energia") }
 	}
+	
+	method enemigo() = goku
+}
+
+object goku inherits EntidadesVivas(position = game.center(), vida = 100){
+	
+	var property furia = 0
+	var property estaTransformado = false
+	
+	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
 	
 	method transformarse(){  // el jugador se transforma y aumenta su daño
 		if (furia == 100 and not estaTransformado){
@@ -131,12 +131,10 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	
 	override method morir(){
 		animaciones.morir(self)
-		game.schedule(2000, {pantallaDerrota.mostrar()})
+		game.schedule(2000, {juego.dificultad().pantallaDerrota()})
 	}
 	
-	override method puedeMoverse() =
-		super() and
-		freezer.estaVivo()
+	override method enemigo() = freezer
 	
 }
 
@@ -173,18 +171,12 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 		}
 	}
 	
-	method golpear(){ 
+	method golpearBot(){ 
         if (direccionHaciaLaQueMira.destino(self) == goku.position() and self.puedeMoverse() ){
 			game.getObjectsIn(direccionHaciaLaQueMira.destino(self) ).first().recibirAtaque(danio)
 			animaciones.golpear(self)
 		}
     }
-	
-	override method puedeMoverse(){ //el enemigo solo se puede mover si el jugador esta en un radio de 4 casillas de el
-		return 
-			super() and
-			goku.estaVivo()
-		}
 		
 	method esquivarObstaculo(){  // metodo para que el enemigo no se quede enganchado contra un obstaculo, y pase por al lado
 		if( self.hayUnObstaculoAbajo())
@@ -220,21 +212,15 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	
 	method velocidadDeAtaque(valor){ //tiempo en el que el enemigo lanza un ataque
 		
-		game.onTick(valor, "ataqueEnemgio",{ self.golpear() })
+		game.onTick(valor, "ataqueEnemgio",{ self.golpearBot() })
 	}
 	
 	override method morir(){ 
 		animaciones.morir(self)
-		game.schedule(2000, {pantallaVictoria.mostrar()})
+		game.schedule(2000, {juego.dificultad().pantallaVictoria()})
 	}
-
-	method golpearUnoVsUno(){
-			 if (direccionHaciaLaQueMira.destino(self) == goku.position()){
-			game.getObjectsIn(direccionHaciaLaQueMira.destino(self) ).first().recibirAtaque(danio)
-			animaciones.golpear(self)
-		}
-	}
-
-
+	
+	override method enemigo() = goku
+	
 }
 

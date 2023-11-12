@@ -13,13 +13,13 @@ object animaciones{
 		
 	}
 	
-	method disparar(){ //animacion de lanzar kame
+	method disparar(entidad){ //animacion de lanzar kame
 		
-		goku.serAturdido(450)
-		goku.accion("Kame")
-		game.schedule(100, {goku.accion("Kame1")})
-		game.schedule(200, {goku.accion("Kame2")})							//cambiar a objetos
-		game.schedule(400, {goku.accion("")})
+		entidad.serAturdido(450)
+		entidad.accion("Kame")
+		game.schedule(100, {entidad.accion("Kame1")})
+		game.schedule(200, {entidad.accion("Kame2")})							//cambiar a objetos
+		game.schedule(400, {entidad.accion("")})
 	}
 	
 	method transformacion(){  //animacion de transformacion

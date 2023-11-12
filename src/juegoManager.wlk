@@ -60,10 +60,6 @@ object juego{
 	method agregarVisualesParaUnoVsUno(){
 		game.addVisual(goku)
 		game.addVisual(freezer)
-		game.addVisual(barraDeVida)
-		game.addVisual(barraDeEnergia)
-		game.addVisual(barraDeFuria)
-		game.addVisual(barraDeEnemigo)
 		obstaculos.forEach({a => game.addVisual(a)})
 		bordes.forEach({b => game.addVisual(b)})
 	}
@@ -71,10 +67,6 @@ object juego{
 	method agregarVisuales(){
 		game.addVisual(goku)
 		game.addVisual(freezer)
-		game.addVisual(barraDeVida)
-		game.addVisual(barraDeEnergia)
-		game.addVisual(barraDeFuria)
-		game.addVisual(barraDeEnemigo)
 		obstaculos.forEach({a => game.addVisual(a)})
 		bordes.forEach({b => game.addVisual(b)})
 		
@@ -92,13 +84,22 @@ object juego{
 	}
 	
 	method configurarTeclasParaUnoVsUno(){
-		self.configurarTeclas()
-		keyboard.s().onPressDo{ freezer.caminarArriba()}
-		keyboard.x().onPressDo{ freezer.caminarAbajo()}
-		keyboard.z().onPressDo{ freezer.caminarIzquierda()}
-		keyboard.c().onPressDo{ freezer.caminarDerecha()}
-		keyboard.n().onPressDo{ freezer.golpearUnoVsUno() }
-		}
+		keyboard.w().onPressDo{ goku.caminarArriba()}
+		keyboard.s().onPressDo{ goku.caminarAbajo()}
+		keyboard.a().onPressDo{ goku.caminarIzquierda()}
+		keyboard.d().onPressDo{ goku.caminarDerecha()}
+		keyboard.r().onPressDo{ goku.golpear() }
+		keyboard.t().onPressDo{ goku.usarBolaDeEnergia() }
+		keyboard.y().onPressDo{ goku.usarBengalaSolar() }
+		keyboard.u().onPressDo{ goku.transformarse() }
+		keyboard.up().onPressDo{ freezer.caminarArriba()}
+		keyboard.down().onPressDo{ freezer.caminarAbajo()}
+		keyboard.left().onPressDo{ freezer.caminarIzquierda()}
+		keyboard.right().onPressDo{ freezer.caminarDerecha()}
+		keyboard.i().onPressDo{ freezer.golpear() }
+		keyboard.o().onPressDo{ freezer.usarBolaDeEnergia() }
+		keyboard.p().onPressDo{ freezer.usarBengalaSolar() } 
+	}
 	
 	method bordesDelMapa(){
 		
@@ -162,31 +163,6 @@ object juego{
             self.generarCapsulaEnergiaSiEstaVacio(maxCapsula)
 	}
 	method dificultad() = dificultad
-}
-
-object pantallaVictoria
-{
-	method mostrar()
-	{
-		game.clear()
-		game.height(16)
-		game.width(22)
-		game.addVisual(victoriaPantalla)
-		keyboard.p().onPressDo{juego.dificultad().configurar()}
-		keyboard.o().onPressDo{juego.iniciar()}
-	}
-}
-object pantallaDerrota
-{
-	method mostrar()
-	{
-		game.clear()
-		game.height(16)
-		game.width(22)
-		game.addVisual(derrotaPantalla)
-		keyboard.p().onPressDo{juego.dificultad().configurar()}
-		keyboard.o().onPressDo{juego.iniciar()}
-	}
 }
 object pantallaReglas
 {
