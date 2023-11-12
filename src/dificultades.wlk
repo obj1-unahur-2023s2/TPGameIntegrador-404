@@ -4,6 +4,7 @@ import juegoManager.*
 import direcciones.*
 import pantallas.*
 import indicadores.*
+import musica.*
 
 
 class Dificultad{
@@ -43,7 +44,7 @@ object facil inherits Dificultad
 		juego.configurarTeclas()
 		game.onTick(10000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
 		game.onTick(7000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
-		configuracion.configurarEnemigo(10,500, 600, 1000)
+		configuracion.configurarEnemigo(0,500, 600, 1000)
 		configuracion.configurarJugador(25,100)
 		configuracion.configurarEstadoInicial()
 		self.agregarVisualesIndicadores()

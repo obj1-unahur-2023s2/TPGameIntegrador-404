@@ -4,6 +4,7 @@ import juegoManager.*
 import animaciones.*
 import obstaculos.*
 import direcciones.*
+import musica.*
 
 
 class EntidadesVivas{
@@ -83,6 +84,7 @@ class EntidadesVivas{
 		if (self.puedeMoverse()){
             direccionHaciaLaQueMira.atacarHaciaLaDireccionQueMira(self)
             animaciones.golpear(self)
+            sonidoGolpe.iniciar()
         }
 	}
     
@@ -91,6 +93,7 @@ class EntidadesVivas{
 			const bola = new BolaDeEnergia(position = direccionHaciaLaQueMira.destino(self), usuario = self)
 			animaciones.disparar(self)
 			game.addVisual(bola)
+			sonidoKame.iniciar()
 			direccionHaciaLaQueMira.desplazamiento(bola)
 			energia = 0.max(energia - 10)
 		}
@@ -102,6 +105,7 @@ class EntidadesVivas{
 		if ( energia >= 25){
 			const bengalaSolar = new BengalaSolar(usuario = self)
 			game.addVisual(bengalaSolar)
+			sonidoBengalaSolar.iniciar()
 			bengalaSolar.aturdir()
 			energia = 0.max(energia - 25)
 		}
@@ -122,6 +126,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 		if (furia == 100 and not estaTransformado){
 			estaTransformado = true
 			animaciones.transformacion()
+			sonidoTransformacion.iniciar()
 			danio *= 2
 		}
 		else{

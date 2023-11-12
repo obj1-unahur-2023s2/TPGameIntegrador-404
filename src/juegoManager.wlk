@@ -5,6 +5,7 @@ import obstaculos.*
 import pantallas.*
 import dificultades.*
 import direcciones.*
+import musica.*
 
 object juego{
 	
@@ -49,7 +50,7 @@ object juego{
 			dificil.configurar()
 			dificultad = dificil
 		}
-		keyboard.y().onPressDo{
+		keyboard.z().onPressDo{
 			unoVsUno.configurar()
 			dificultad = unoVsUno
 		}
