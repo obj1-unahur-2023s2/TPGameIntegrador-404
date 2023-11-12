@@ -12,7 +12,8 @@ Luca La Fuente
 ## Capturas
 
 Portada del juego:
-![Inicio](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/3fff0d9d-21f0-4518-8a49-5b6bec191c33)
+![Inicio](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/ecfb9bff-d9c0-4b53-9996-2f927e1b6fca)
+
 
 
 In Game:
@@ -36,7 +37,8 @@ Transformacion: El personaje tiene una barra de "Furia" la cual se carga al reci
 el personaje se puede transformar en super saiyajin. El personaje al transformarse multiplica su daño x2.
 
 Instrucciones VS COM:
-![Instrucciones](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/31d95548-9a5c-4d6a-bc79-a4055a8a4572)
+![Instrucciones](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/aac6dd86-5c46-449f-ae3a-5f0e4fa1770d)
+
 
 
 Instrucciones VS Jugador:
