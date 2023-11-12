@@ -49,8 +49,23 @@ object juego{
 			dificil.configurar()
 			dificultad = dificil
 		}
+		keyboard.y().onPressDo{
+			unoVsUno.configurar()
+			dificultad = unoVsUno
+		}
 		keyboard.i().onPressDo{pantallaReglas.mostrar()}
 		
+	}
+	
+	method agregarVisualesParaUnoVsUno(){
+		game.addVisual(goku)
+		game.addVisual(freezer)
+		game.addVisual(barraDeVida)
+		game.addVisual(barraDeEnergia)
+		game.addVisual(barraDeFuria)
+		game.addVisual(barraDeEnemigo)
+		obstaculos.forEach({a => game.addVisual(a)})
+		bordes.forEach({b => game.addVisual(b)})
 	}
 	
 	method agregarVisuales(){
@@ -75,6 +90,15 @@ object juego{
 		keyboard.e().onPressDo{ goku.usarBengalaSolar() }
 		keyboard.r().onPressDo{ goku.transformarse() }
 	}
+	
+	method configurarTeclasParaUnoVsUno(){
+		self.configurarTeclas()
+		keyboard.s().onPressDo{ freezer.caminarArriba()}
+		keyboard.x().onPressDo{ freezer.caminarAbajo()}
+		keyboard.z().onPressDo{ freezer.caminarIzquierda()}
+		keyboard.c().onPressDo{ freezer.caminarDerecha()}
+		keyboard.n().onPressDo{ freezer.golpearUnoVsUno() }
+		}
 	
 	method bordesDelMapa(){
 		

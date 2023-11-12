@@ -37,6 +37,20 @@ object dificil
 		configuracion.configurarEstadoInicial()
 	}
 }
+object unoVsUno {
+	method configurar(){
+		game.clear()
+		game.height(16)
+		game.width(22)
+		juego.bordesDelMapa()
+		juego.agregarVisualesParaUnoVsUno()
+		juego.configurarTeclasParaUnoVsUno()
+		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(2) })
+		game.onTick(7500, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(2) })
+		configuracion.configurarJugadorParaUnoVsUno(5)
+		configuracion.configurarEstadoInicial()
+	}
+}
 
 object configuracion{
 	
@@ -46,7 +60,12 @@ object configuracion{
 		freezer.velocidadDeMovimiento(vMovimiento)
 		freezer.velocidadDeAtaque(vDanio)
 	}
-	
+	method configurarJugadorParaUnoVsUno(danio){
+		self.configurarJugador(danio)
+		freezer.danio(10)
+		freezer.vida(1000)
+		
+	}
 	method configurarJugador(danio){
 		goku.danio(danio)
 		goku.estaTransformado(false)

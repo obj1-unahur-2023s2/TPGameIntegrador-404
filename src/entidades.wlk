@@ -182,10 +182,6 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	
 	override method puedeMoverse(){ //el enemigo solo se puede mover si el jugador esta en un radio de 4 casillas de el
 		return 
-			goku.position().x()-self.position().x().abs() <= 4 and
-			goku.position().y()-self.position().y().abs() <= 4 and
-			goku.position().x()-self.position().x() >= -4 and
-			goku.position().y()-self.position().y() >= -4 and
 			super() and
 			goku.estaVivo()
 		}
@@ -232,7 +228,12 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 		game.schedule(2000, {pantallaVictoria.mostrar()})
 	}
 
-
+	method golpearUnoVsUno(){
+			 if (direccionHaciaLaQueMira.destino(self) == goku.position()){
+			game.getObjectsIn(direccionHaciaLaQueMira.destino(self) ).first().recibirAtaque(danio)
+			animaciones.golpear(self)
+		}
+	}
 
 
 }

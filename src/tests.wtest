@@ -1,0 +1,36 @@
+import animaciones.*
+import dificultades.*
+import direcciones.*
+import entidades.*
+import habilidades.*
+import indicadores.*
+import juegoManager.*
+import obstaculos.*
+
+describe "test del juego"{
+	
+	test "cuando goku usa Bola De Energia la energia le baja 10 "{
+		goku.usarBolaDeEnergia()
+		assert.equals(90, goku.energia())
+	}
+	test "cuando goku usa bengala solar  la energia le baja 25 "{
+		goku.usarBengalaSolar()
+		assert.equals(75, goku.energia())
+	}
+	test "cuando goku tiene 0  de vida muere "{
+		goku.recibirAtaque(100)
+		assert.notThat(goku.estaVivo())
+	}
+	test "cuando goku recibe ataque  la furia sube 10"{
+		goku.recibirAtaque(1)
+		assert.equals(10, goku.furia())
+	}
+	
+	test "goku empieza con 100 de energia "{
+		assert.equals(100,goku.energia())
+	}
+	test "cuando frezzer tiene 0 de vida muere "{
+		freezer.recibirAtaque(10000)
+		assert.notThat(freezer.estaVivo())
+	}
+
