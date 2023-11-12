@@ -174,6 +174,19 @@ object pantallaReglas
 		game.width(22)
 		game.addVisual(reglasPantalla)
 		keyboard.p().onPressDo{juego.iniciar()}
+		keyboard.o().onPressDo{pantallaReglasVs.mostrar()}
+	}
+}
+
+object pantallaReglasVs{
+	
+	method mostrar(){
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(reglasPantallaVs)
+		keyboard.p().onPressDo{juego.iniciar()}
+		keyboard.o().onPressDo{pantallaReglas.mostrar()}
 	}
 }
 
