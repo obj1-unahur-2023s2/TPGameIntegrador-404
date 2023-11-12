@@ -35,8 +35,13 @@ BengalaSolar: Es una habilidad de ayuda que aturde al enemigo, cuando el enemigo
 Transformacion: El personaje tiene una barra de "Furia" la cual se carga al recibir daño o al realizarlo, cuando la barra esta completa, 
 el personaje se puede transformar en super saiyajin. El personaje al transformarse multiplica su daño x2.
 
-Instrucciones:
+Instrucciones VS COM:
 ![Instrucciones](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/31d95548-9a5c-4d6a-bc79-a4055a8a4572)
+
+
+Instrucciones VS Jugador:
+![instruccionesVS](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-404/assets/141644675/eb3c3b13-0b93-475f-9cb4-59e1fca05fbe)
+
 
 
 ## Otros
