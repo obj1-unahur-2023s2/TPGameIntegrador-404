@@ -140,9 +140,9 @@ object configuracion{
 	method configurarJugadorParaUnoVsUno(){
 		self.configurarJugador(10,500)
 		freezer.danio(15)
-		freezer.vida(540)
+		freezer.vida(500)
 		freezer.energia(100)
-		game.onCollideDo(freezer,{algo => algo.serAgarrado(freezer)})
+		game.onCollideDo(freezer,{algo => algo.serAgarrado(freezer, freezer.vida())})
 		
 	}
 	method configurarJugador(danio,vida){
@@ -151,7 +151,7 @@ object configuracion{
 		goku.vida(vida)
 		goku.furia(0)
 		goku.energia(100)
-		game.onCollideDo(goku,{algo => algo.serAgarrado(goku)})
+		game.onCollideDo(goku,{algo => algo.serAgarrado(goku, goku.vida())})
 	}
 	
 	method configurarEstadoInicial(){

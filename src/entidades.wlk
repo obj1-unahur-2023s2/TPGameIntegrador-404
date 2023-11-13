@@ -122,8 +122,10 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	
 	override method image() = if (not estaTransformado) "assets/jugador/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png" else "assets/jugador/ssj/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
 	
+	method puedeTransformarse() = furia == 100 and not estaTransformado
+	
 	method transformarse(){  // el jugador se transforma y aumenta su daño
-		if (furia == 100 and not estaTransformado){
+		if (self.puedeTransformarse()){
 			estaTransformado = true
 			animaciones.transformacion()
 			sonidoTransformacion.iniciar()

@@ -9,13 +9,13 @@ import obstaculos.*
 
 describe "test del juego"{
 	
-	test "cuando goku usa Bola De Energia la energia le baja 10 "{
-		goku.usarBolaDeEnergia()
-		assert.equals(90, goku.energia())
+	test "cuando goku tiene 100 de furia se puede transformar"{
+		goku.furia(100)
+		assert.that(goku.puedeTransformarse())
 	}
-	test "cuando goku usa bengala solar  la energia le baja 25 "{
-		goku.usarBengalaSolar()
-		assert.equals(75, goku.energia())
+	test "cuando goku tiene menos de 100 de furia no se puede transformar"{
+		goku.furia(99)
+		assert.notThat(goku.puedeTransformarse())
 	}
 	test "cuando goku tiene 0  de vida muere "{
 		goku.recibirAtaque(100)
