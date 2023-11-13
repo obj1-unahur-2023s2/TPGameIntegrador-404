@@ -35,7 +35,7 @@ class BolaDeEnergia {
 		}
 	}
 	
-	method serAgarrado(entidad,cantidad){}
+	method serAgarrado(entidad){}
 	
 	method estaSobreUnEnemigoOObstaculo() = 
 		game.getObjectsIn(position).first() == usuario.enemigo() or juego.obstaculos().any( { o => o.position() == self.position()  } )
@@ -55,7 +55,7 @@ class BengalaSolar{
 		game.schedule(150,{game.removeVisual(self)})
 	}
 	
-	method serAgarrado(entidad,cantidad){}
+	method serAgarrado(entidad){}
 	
 	method hayEnemigoAlRededor() = 
 		usuario.position().up(1) == usuario.enemigo().position() or

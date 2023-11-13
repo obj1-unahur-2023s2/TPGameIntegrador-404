@@ -59,6 +59,8 @@ object facil inherits Dificultad
 		game.addVisual(barraDeFuria)
 		game.addVisual(barraDeVidaEnemigo)
 	}
+	
+	method maximoVida() = 100
 }
 object dificil inherits Dificultad
 {
@@ -84,6 +86,8 @@ object dificil inherits Dificultad
 		game.addVisual(barraDeFuria)
 		game.addVisual(barraDeVidaEnemigo)
 	}
+	
+	method maximoVida() = 100
 }
 object unoVsUno inherits Dificultad{
 	
@@ -91,8 +95,8 @@ object unoVsUno inherits Dificultad{
 		super()
 		juego.agregarVisualesParaUnoVsUno()
 		juego.configurarTeclasParaUnoVsUno()
-		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(2) })
-		game.onTick(7500, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(2) })
+		game.onTick(9000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
+		game.onTick(5000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
 		configuracion.configurarJugadorParaUnoVsUno()
 		configuracion.configurarEstadoInicial()
 		self.agregarVisualesIndicadores()
@@ -127,6 +131,8 @@ object unoVsUno inherits Dificultad{
 		game.addVisual(barraDeVidaEnemigo)
 		game.addVisual(barraDeEnergiaEnemigo)
 	}
+	
+	method maximoVida() = 500
 }
 
 object configuracion{
@@ -142,7 +148,7 @@ object configuracion{
 		freezer.danio(15)
 		freezer.vida(500)
 		freezer.energia(100)
-		game.onCollideDo(freezer,{algo => algo.serAgarrado(freezer, freezer.vida())})
+		game.onCollideDo(freezer,{algo => algo.serAgarrado(freezer)})
 		
 	}
 	method configurarJugador(danio,vida){
@@ -151,7 +157,7 @@ object configuracion{
 		goku.vida(vida)
 		goku.furia(0)
 		goku.energia(100)
-		game.onCollideDo(goku,{algo => algo.serAgarrado(goku, goku.vida())})
+		game.onCollideDo(goku,{algo => algo.serAgarrado(goku)})
 	}
 	
 	method configurarEstadoInicial(){
