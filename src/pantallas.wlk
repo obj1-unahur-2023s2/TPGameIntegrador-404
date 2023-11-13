@@ -6,10 +6,13 @@ class Pantalla
 	var property position 
 	
 }
-object inicioPantalla inherits Pantalla(image = "assets/pantallas/Inicio.png", position = game.origin()){}
-object victoriaPantalla inherits Pantalla(image = "assets/pantallas/Victoria.png", position = game.origin()){}
-object derrotaPantalla inherits Pantalla(image = "assets/pantallas/GameOver.png", position = game.origin()){}
-object reglasPantalla inherits Pantalla(image = "assets/pantallas/Instrucciones.png", position = game.origin()){}
-object reglasPantallaVs inherits Pantalla(image = "assets/pantallas/InstruccionesVS.png", position = game.origin()){}
-object victoriaJugador1 inherits Pantalla(image = "assets/pantallas/Jugador1Win.png", position = game.origin()){}
-object victoriaJugador2 inherits Pantalla(image = "assets/pantallas/Jugador2Win.png", position = game.origin()){}
+const inicioPantalla= new Pantalla(image = "assets/pantallas/Inicio.png", position = game.origin())
+const victoriaPantalla=new Pantalla(image = "assets/pantallas/Victoria.png", position = game.origin())
+const derrotaPantalla= new Pantalla(image = "assets/pantallas/GameOver.png", position = game.origin())
+const reglasPantalla= new Pantalla(image = "assets/pantallas/Instrucciones.png", position = game.origin())
+const reglasPantallaVs= new Pantalla(image = "assets/pantallas/InstruccionesVS.png", position = game.origin())
+const victoriaJugador1= new Pantalla(image = "assets/pantallas/Jugador1Win.png", position = game.origin())
+const victoriaJugador2= new Pantalla(image = "assets/pantallas/Jugador2Win.png", position = game.origin())
+
+
+
