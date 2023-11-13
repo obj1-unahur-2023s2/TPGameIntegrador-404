@@ -33,6 +33,10 @@ class Dificultad{
 		keyboard.o().onPressDo{juego.dificultad().configurar()}
 		keyboard.p().onPressDo{juego.iniciar()}	
 	}
+	
+	method agregarVisualesIndicadores()
+	
+	method maximoVida() = 100
 }
 
 object facil inherits Dificultad
@@ -50,7 +54,7 @@ object facil inherits Dificultad
 		self.agregarVisualesIndicadores()
 	}
 	
-	method agregarVisualesIndicadores(){
+	override method agregarVisualesIndicadores(){
 		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 10)
 		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
 		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = 50)
@@ -60,7 +64,6 @@ object facil inherits Dificultad
 		game.addVisual(barraDeVidaEnemigo)
 	}
 	
-	method maximoVida() = 100
 }
 object dificil inherits Dificultad
 {
@@ -77,7 +80,7 @@ object dificil inherits Dificultad
 		self.agregarVisualesIndicadores()
 	}
 	
-	method agregarVisualesIndicadores(){
+	override method agregarVisualesIndicadores(){
 		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 10)
 		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
 		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = 100)
@@ -87,7 +90,6 @@ object dificil inherits Dificultad
 		game.addVisual(barraDeVidaEnemigo)
 	}
 	
-	method maximoVida() = 100
 }
 object unoVsUno inherits Dificultad{
 	
@@ -120,7 +122,7 @@ object unoVsUno inherits Dificultad{
 		keyboard.p().onPressDo{juego.iniciar()}	
 	}
 	
-	method agregarVisualesIndicadores(){
+	override method agregarVisualesIndicadores(){
 		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 50)
 		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
 		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = 50)
@@ -132,7 +134,7 @@ object unoVsUno inherits Dificultad{
 		game.addVisual(barraDeEnergiaEnemigo)
 	}
 	
-	method maximoVida() = 500
+	override method maximoVida() = 500
 }
 
 object configuracion{
