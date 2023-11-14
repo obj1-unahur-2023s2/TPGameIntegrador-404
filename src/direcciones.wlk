@@ -13,7 +13,13 @@ object frente {
 	}
 	
 	method destino(entidad) = entidad.position().down(1)
-
+	
+	method esquivarObstaculo(){
+    	if( freezer.hayUnObstaculoEnLaDireccionHaciaLaQueMira()){
+			freezer.caminarIzquierda()
+			game.schedule(200,{freezer.caminarAbajo()})	
+		}
+    }
 }
 
 object atras {
@@ -26,6 +32,13 @@ object atras {
 	}
 	
 	method destino(entidad) = entidad.position().up(1)
+	
+	method esquivarObstaculo(){
+    	if( freezer.hayUnObstaculoEnLaDireccionHaciaLaQueMira()){
+    		freezer.caminarDerecha()
+			game.schedule(200,{freezer.caminarArriba()})	
+		}
+    }
 }
 
 object derecha {
@@ -38,6 +51,12 @@ object derecha {
 	}
 	
 	method destino(entidad) = entidad.position().right(1)
+	
+	method esquivarObstaculo(){
+    	if(freezer.hayUnObstaculoEnLaDireccionHaciaLaQueMira()){
+			freezer.caminarAbajo()
+		}
+    }
 }
 
 object izquierda {
@@ -50,5 +69,11 @@ object izquierda {
 	}
 	
 	method destino(entidad) = entidad.position().left(1)
+	
+	method esquivarObstaculo(){
+    	if(freezer.hayUnObstaculoEnLaDireccionHaciaLaQueMira() ){
+			freezer.caminarArriba()
+		}
+    }
 
 }

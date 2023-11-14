@@ -90,7 +90,7 @@ class EntidadesVivas{
             sonidoGolpe.iniciar()
         }
 	}
-    
+	
     method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
 		
 		if( energia >= 15){
@@ -100,14 +100,10 @@ class EntidadesVivas{
 		else{ game.say(self,"No tengo suficiente energia")}
 		
 	}
-			//usar(habilidad)
 	method usarBengalaSolar(){  //el personaje lanza una onda de luz que deja aturdido al enemigo, sin poder realizar una accion por un determinado tiempo
 		if ( energia >= 25){
 			const bengalaSolar = new BengalaSolar(usuario = self)
-			game.addVisual(bengalaSolar)
-			sonidoBengalaSolar.iniciar()
-			bengalaSolar.aturdir()
-			energia = 0.max(energia - 25)
+			bengalaSolar.usar()
 		}
 		else{ game.say(self, "No tengo suficiente energia") }
 	}
@@ -153,28 +149,22 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	method movimiento(){ //el enemigo se mueve hacia donde esta el jugador
 		
 		if (goku.position().x() > self.position().x() and self.puedeMoverse()){
-			 self.caminarDerecha()
-			if (self.hayUnObstaculoALaDerecha()){
-			 	self.esquivarObstaculo()
-			 }
+			self.caminarDerecha()
+			game.schedule(250,{direccionHaciaLaQueMira.esquivarObstaculo()})
+
 		}
 		else if (goku.position().x() < self.position().x() and self.puedeMoverse()){
 			self.caminarIzquierda()
-			if (self.hayUnObstaculoALaIzquierda()){
-			 	self.esquivarObstaculo()
-			 }
+			game.schedule(250,{direccionHaciaLaQueMira.esquivarObstaculo()})
+
 		}
 		else if (goku.position().y() > self.position().y() and self.puedeMoverse()){
 			self.caminarArriba()
-			if (self.hayUnObstaculoArriba()){
-				self.esquivarObstaculo()	
-			}
+			game.schedule(250,{direccionHaciaLaQueMira.esquivarObstaculo()})	
 		}
 		else if (goku.position().y() < self.position().y() and self.puedeMoverse()){
 			self.caminarAbajo()
-			if (self.hayUnObstaculoAbajo()){
-				self.esquivarObstaculo()	
-			}
+			game.schedule(250,{direccionHaciaLaQueMira.esquivarObstaculo()})	
 		}
 	}
 	
@@ -184,34 +174,9 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 			animaciones.golpear(self)
 		}
     }
-		
-	method esquivarObstaculo(){  // metodo para que el enemigo no se quede enganchado contra un obstaculo, y pase por al lado
-		if( self.hayUnObstaculoAbajo())
-			{
-				self.caminarIzquierda()
-				game.schedule(100,{self.caminarAbajo()})
-				
-			}
-		else if( self.hayUnObstaculoArriba())  //cambiar
-			{
-				self.caminarDerecha()
-				game.schedule(100,{self.caminarArriba()})
-			}
-		else if(self.hayUnObstaculoALaDerecha())
-			{
-				self.caminarAbajo()
-			}
-		else if(self.hayUnObstaculoALaIzquierda())
-			{
-				self.caminarArriba()
-			}
-	}
-	
-	method hayUnObstaculoALaDerecha() = juego.obstaculos().any({obstaculo => position.right(1) == obstaculo.position()})
-	method hayUnObstaculoALaIzquierda() = juego.obstaculos().any({obstaculo => position.left(1) == obstaculo.position()})
-	method hayUnObstaculoArriba() = juego.obstaculos().any({obstaculo => position.up(1) == obstaculo.position()})
-	method hayUnObstaculoAbajo() = juego.obstaculos().any({obstaculo => position.down(1) == obstaculo.position()})
-	
+    
+    method hayUnObstaculoEnLaDireccionHaciaLaQueMira() = juego.obstaculos().any({obstaculo => direccionHaciaLaQueMira.destino(self) == obstaculo.position()})
+    
 	method velocidadDeMovimiento(valor){ //tiempo en el que el enemigo se mueve 1 casilla
 		
 		game.onTick(valor, "movimientoEnemgio",{ self.movimiento() })

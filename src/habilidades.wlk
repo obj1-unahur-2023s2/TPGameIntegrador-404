@@ -67,6 +67,15 @@ class BengalaSolar{
 		game.schedule(150,{game.removeVisual(self)})
 	}
 	
+	method usar(){
+		if (usuario.puedeMoverse()){
+			game.addVisual(self)
+			sonidoBengalaSolar.iniciar()
+			self.aturdir()
+			usuario.energia(0.max(usuario.energia() - 25))
+		}
+	}
+	
 	method serAgarrado(entidad){}
 	
 	method hayEnemigoAlRededor() = 
