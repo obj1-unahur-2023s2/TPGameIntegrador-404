@@ -2,6 +2,7 @@ import wollok.game.*
 import entidades.*
 import juegoManager.*
 import animaciones.*
+import musica.*
 
 class BolaDeEnergia {
 	
@@ -32,6 +33,17 @@ class BolaDeEnergia {
 			game.removeTickEvent("movimientoBola")
 			game.getObjectsIn(position).first().recibirAtaque(goku.danio() / 2)
 			game.removeVisual(self)
+		}
+	}
+	
+	method usar(){
+		
+		if (usuario.puedeMoverse()){
+			animaciones.disparar(usuario)
+			game.addVisual(self)
+			sonidoKame.iniciar()
+			usuario.direccionHaciaLaQueMira().desplazamiento(self)
+			usuario.energia(0.max(usuario.energia() - 10))
 		}
 	}
 	

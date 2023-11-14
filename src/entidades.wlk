@@ -92,13 +92,10 @@ class EntidadesVivas{
 	}
     
     method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
+		
 		if( energia >= 15){
 			const bola = new BolaDeEnergia(position = direccionHaciaLaQueMira.destino(self), usuario = self)
-			animaciones.disparar(self)
-			game.addVisual(bola)
-			sonidoKame.iniciar()
-			direccionHaciaLaQueMira.desplazamiento(bola)
-			energia = 0.max(energia - 10)
+			bola.usar()
 		}
 		else{ game.say(self,"No tengo suficiente energia")}
 		
