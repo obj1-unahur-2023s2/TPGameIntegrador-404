@@ -7,13 +7,6 @@ object frente {
 	
 	method miraHacia() = "Frente"
 	
-	method atacarHaciaLaDireccionQueMira(entidad){
-		
-		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
-			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
-		}
-	}
-	
 	method desplazamiento(bolaDeEnergia){
 		
 		game.onTick(250, "movimientoBola", {bolaDeEnergia.moverseFrente()})
@@ -27,13 +20,6 @@ object atras {
 	
 	method miraHacia() = "Atras"
 	
-	method atacarHaciaLaDireccionQueMira(entidad){
-		
-		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
-			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
-		}
-	}
-	
 	method desplazamiento(bolaDeEnergia){
 		
 		game.onTick(250, "movimientoBola", {bolaDeEnergia.moverseAtras()})
@@ -46,13 +32,6 @@ object derecha {
 	
 	method miraHacia() = "Derecha"
 	
-	method atacarHaciaLaDireccionQueMira(entidad){
-		
-		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
-			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
-		}
-	}
-	
 	method desplazamiento(bolaDeEnergia){
 		
 		game.onTick(250, "movimientoBola", {bolaDeEnergia.moverseDerecha()})	
@@ -64,13 +43,6 @@ object derecha {
 object izquierda {
 	
 	method miraHacia() = "Izquierda"
-	
-	method atacarHaciaLaDireccionQueMira(entidad){
-		
-		if (not game.getObjectsIn(self.destino(entidad)).isEmpty()){
-			game.getObjectsIn(self.destino(entidad)).first().recibirAtaque(entidad.danio())	
-		}
-	}
 	
 	method desplazamiento(bolaDeEnergia){
 		

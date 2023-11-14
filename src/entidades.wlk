@@ -30,10 +30,13 @@ class EntidadesVivas{
 		}
 	}
 	
-	method agarrarVida(){
+	method atacarHaciaLaDireccionQueMira(){
 		
-		
+		if (direccionHaciaLaQueMira.destino(self) == self.enemigo().position()){
+			self.enemigo().recibirAtaque(danio)	
+		}
 	}
+	
 		
 	method puedeMoverse() = not estaAturdido and self.estaVivo() and self.enemigo().estaVivo()
 	
@@ -82,7 +85,7 @@ class EntidadesVivas{
     
    	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
 		if (self.puedeMoverse()){
-            direccionHaciaLaQueMira.atacarHaciaLaDireccionQueMira(self)
+            self.atacarHaciaLaDireccionQueMira()
             animaciones.golpear(self)
             sonidoGolpe.iniciar()
         }

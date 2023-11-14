@@ -104,26 +104,18 @@ object juego{
 	
 	method bordesDelMapa(){
 		
-		self.bordeSuperior()
-		self.bordeIzquierdo()
-		self.bordeDerecho()
-		self.bordeInferior()
+		self.generarBordeSuperiorInferior(2)
+		self.generarBordeSuperiorInferior(14)
+		self.generarBordeIzquierdoDerecho(1)
+		self.generarBordeIzquierdoDerecho(20)
 	}
 	
-	method bordeInferior(){
-		(2..19).forEach({x => bordes.add(new Obstaculo(position = game.at(x , 2)))})
+	method generarBordeSuperiorInferior(posicion){
+		(2..19).forEach({x => bordes.add(new Obstaculo(position = game.at(x , posicion)))})
 	}
 	
-	method bordeSuperior(){
-		(2..19).forEach({x => bordes.add(new Obstaculo(position = game.at(x , 14)))})
-	}
-	
-	method bordeIzquierdo(){
-		(2..14).forEach({y => bordes.add(new Obstaculo(position = game.at(1 , y)))})
-	}
-	
-	method bordeDerecho(){
-		(2..14).forEach({y => bordes.add(new Obstaculo(position = game.at(20 , y)))})
+	method generarBordeIzquierdoDerecho(posicion){
+		(2..14).forEach({y => bordes.add(new Obstaculo(position = game.at(posicion , y)))})
 	}
 	
 	method posicionAleatoria() = game.at( 2.randomUpTo(20), 3.randomUpTo(13) )
