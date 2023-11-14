@@ -20,10 +20,10 @@ class Arbol inherits Obstaculo{
 
 class CapsulaVida inherits Obstaculo{
 	
-	method image() = "assets/elementos/CapsulaVida.png"
+	method image() = "assets/elementos/capsulaVida.png"
 	
 	method serAgarrado(entidad){ 
-		entidad.vida( juego.dificultad().maximoVida().min(entidad.vida() + 10 ))
+		entidad.vida( juego.dificultad().maximoVida().min(entidad.vida() + 30 ))
 		game.removeVisual(self)
 		juego.eliminarCapsulaVida(self)
 	}
@@ -32,10 +32,10 @@ class CapsulaVida inherits Obstaculo{
 
 class CapsulaEnergia inherits Obstaculo{
 	
-	method image() = "assets/elementos/CapsulaEnergia.png"
+	method image() = "assets/elementos/capsulaEnergia.png"
 	
 	method serAgarrado(entidad){ 
-		entidad.energia( 100.min(entidad.energia() + 25) )
+		entidad.energia( 100.min(entidad.energia() + 75) )
 		game.removeVisual(self)
 		juego.eliminarCapsulaEnergia(self)
 	}

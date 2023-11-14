@@ -5,7 +5,7 @@ import animaciones.*
 
 object frente {
 	
-	method miraHacia() = "Frente"
+	method miraHacia() = "frente"
 	
 	method desplazamiento(bolaDeEnergia){
 		
@@ -24,7 +24,7 @@ object frente {
 
 object atras {
 	
-	method miraHacia() = "Atras"
+	method miraHacia() = "atras"
 	
 	method desplazamiento(bolaDeEnergia){
 		
@@ -43,7 +43,7 @@ object atras {
 
 object derecha {
 	
-	method miraHacia() = "Derecha"
+	method miraHacia() = "derecha"
 	
 	method desplazamiento(bolaDeEnergia){
 		
@@ -61,7 +61,7 @@ object derecha {
 
 object izquierda {
 	
-	method miraHacia() = "Izquierda"
+	method miraHacia() = "izquierda"
 	
 	method desplazamiento(bolaDeEnergia){
 		

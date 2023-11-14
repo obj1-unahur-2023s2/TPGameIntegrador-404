@@ -56,7 +56,7 @@ class BengalaSolar{
 	
 	const usuario
 	
-	method image() = "ataques/Luz.png"
+	method image() = "ataques/luz.png"
 	
 	method position() = usuario.position()
 	
