@@ -6,137 +6,6 @@ import pantallas.*
 import indicadores.*
 import musica.*
 
-
-class Dificultad{
-	
-	method configurar(){
-		game.clear()
-		game.height(16)
-		game.width(22)
-		juego.bordesDelMapa()
-	}
-	
-	method pantallaVictoria(){
-		game.clear()
-		game.height(16)
-		game.width(22)
-		game.addVisual(victoriaPantalla)
-		keyboard.o().onPressDo{juego.dificultad().configurar()}
-		keyboard.p().onPressDo{juego.iniciar()}
-	}
-	
-	method pantallaDerrota(){
-		game.clear()
-		game.height(16)
-		game.width(22)
-		game.addVisual(derrotaPantalla)
-		keyboard.o().onPressDo{juego.dificultad().configurar()}
-		keyboard.p().onPressDo{juego.iniciar()}	
-	}
-	
-	method agregarVisualesIndicadores()
-	
-	method maximoVida() = 100
-}
-
-object facil inherits Dificultad
-{
-	override method configurar()
-	{	
-		super()
-		juego.agregarVisuales()
-		juego.configurarTeclas()
-		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(1) })
-		game.onTick(10000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(1) })
-		configuracion.configurarEnemigo(10,500, 600, 1000)
-		configuracion.configurarJugador(25,100)
-		configuracion.configurarEstadoInicial()
-		self.agregarVisualesIndicadores()
-	}
-	
-	override method agregarVisualesIndicadores(){
-		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 10)
-		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
-		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = 50)
-		game.addVisual(barraDeVida)
-		game.addVisual(barraDeEnergia)
-		game.addVisual(barraDeFuria)
-		game.addVisual(barraDeVidaEnemigo)
-	}
-	
-}
-object dificil inherits Dificultad
-{
-	override method configurar()
-	{
-		super()
-		juego.agregarVisuales()
-		juego.configurarTeclas()
-		game.onTick(20000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(1) })
-		game.onTick(15000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(1) })
-		configuracion.configurarEnemigo(20,1000, 400, 800)
-		configuracion.configurarJugador(20,100)
-		configuracion.configurarEstadoInicial()
-		self.agregarVisualesIndicadores()
-	}
-	
-	override method agregarVisualesIndicadores(){
-		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 10)
-		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
-		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = 100)
-		game.addVisual(barraDeVida)
-		game.addVisual(barraDeEnergia)
-		game.addVisual(barraDeFuria)
-		game.addVisual(barraDeVidaEnemigo)
-	}
-	
-}
-object unoVsUno inherits Dificultad{
-	
-	override method configurar(){
-		super()
-		juego.agregarVisualesParaUnoVsUno()
-		juego.configurarTeclasParaUnoVsUno()
-		game.onTick(9000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
-		game.onTick(5000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
-		configuracion.configurarJugadorParaUnoVsUno()
-		configuracion.configurarEstadoInicial()
-		self.agregarVisualesIndicadores()
-	}
-	
-	override method pantallaVictoria(){
-		game.clear()
-		game.height(16)
-		game.width(22)
-		game.addVisual(victoriaJugador1)
-		keyboard.o().onPressDo{juego.dificultad().configurar()}
-		keyboard.p().onPressDo{juego.iniciar()}
-	}
-	
-	override method pantallaDerrota(){
-		game.clear()
-		game.height(16)
-		game.width(22)
-		game.addVisual(victoriaJugador2)
-		keyboard.o().onPressDo{juego.dificultad().configurar()}
-		keyboard.p().onPressDo{juego.iniciar()}	
-	}
-	
-	override method agregarVisualesIndicadores(){
-		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 50)
-		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
-		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = 50)
-		const barraDeEnergiaEnemigo = new BarraDeEnergia(position = game.at(16,15), usuario = freezer)
-		game.addVisual(barraDeVida)
-		game.addVisual(barraDeEnergia)
-		game.addVisual(barraDeFuria)
-		game.addVisual(barraDeVidaEnemigo)
-		game.addVisual(barraDeEnergiaEnemigo)
-	}
-	
-	override method maximoVida() = 500
-}
-
 object configuracion{
 	
 	method configurarEnemigo(danio, vida, vMovimiento, vDanio){
@@ -172,6 +41,127 @@ object configuracion{
 		freezer.direccionHaciaLaQueMira(atras)
 	}
 }
+
+class Dificultad{
+	
+	method configurar(){
+		game.clear()
+		game.height(16)
+		game.width(22)
+		juego.bordesDelMapa()
+	}
+	
+	method pantallaVictoria(){
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(victoriaPantalla)
+		keyboard.o().onPressDo{juego.dificultad().configurar()}
+		keyboard.p().onPressDo{juego.iniciar()}
+	}
+	
+	method pantallaDerrota(){
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(derrotaPantalla)
+		keyboard.o().onPressDo{juego.dificultad().configurar()}
+		keyboard.p().onPressDo{juego.iniciar()}	
+	}
+	
+	method agregarVisualesIndicadores()
+	
+	method maximoVida() = 100
+}
+class ParametrosDificultad inherits Dificultad{
+		const edanio
+		const evida
+		const eVMovimiento
+		const eVDanio
+		const danio
+		const vida
+		const tiempoOnTickVida
+		const tiempoOnTickEnergia
+		const capsula
+		const divBarEnemy
+		
+	override method configurar(){
+		
+		game.clear()
+		game.height(16)
+		game.width(22)
+		juego.bordesDelMapa()
+		juego.agregarVisuales()
+		juego.configurarTeclas()
+		game.onTick(tiempoOnTickVida, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(capsula) })
+		game.onTick(tiempoOnTickEnergia, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(capsula) })
+		configuracion.configurarEnemigo(edanio,evida,eVMovimiento,eVDanio)
+		configuracion.configurarJugador(danio,vida)
+		configuracion.configurarEstadoInicial()
+		self.agregarVisualesIndicadores()
+	}
+	override method agregarVisualesIndicadores(){
+		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 10)
+		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
+		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = divBarEnemy)
+		game.addVisual(barraDeVida)
+		game.addVisual(barraDeEnergia)
+		game.addVisual(barraDeFuria)
+		game.addVisual(barraDeVidaEnemigo)
+	}	
+}
+//DECLARACION DE LOS NIVELES CON DIFERENTES PARAMETROS PARA HACERLO MAS DIFICIL O MAS FACIL!
+const facil= new ParametrosDificultad(edanio = 10, evida = 500, eVMovimiento = 600, eVDanio = 1000, danio = 25, vida = 100,
+										  tiempoOnTickVida = 15000,tiempoOnTickEnergia = 10000 , capsula = 1,divBarEnemy=50)
+
+const dificil=new ParametrosDificultad(edanio = 20, evida = 1000, eVMovimiento = 400, eVDanio = 800, danio = 20, vida = 100,
+	tiempoOnTickVida = 20000, tiempoOnTickEnergia = 15000, capsula = 1,divBarEnemy=100)
+
+
+
+object unoVsUno inherits Dificultad{
+	
+	override method configurar(){
+		super()
+		juego.agregarVisualesParaUnoVsUno()
+		juego.configurarTeclasParaUnoVsUno()
+		game.onTick(9000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
+		game.onTick(5000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })
+		configuracion.configurarJugadorParaUnoVsUno()
+		configuracion.configurarEstadoInicial()
+		self.agregarVisualesIndicadores()
+	}
+	override method pantallaVictoria(){
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(victoriaJugador1)
+		keyboard.o().onPressDo{juego.dificultad().configurar()}
+		keyboard.p().onPressDo{juego.iniciar()}
+	}
+	override method pantallaDerrota(){
+		game.clear()
+		game.height(16)
+		game.width(22)
+		game.addVisual(victoriaJugador2)
+		keyboard.o().onPressDo{juego.dificultad().configurar()}
+		keyboard.p().onPressDo{juego.iniciar()}	
+	}
+	override method agregarVisualesIndicadores(){
+		const barraDeVida = new BarraDeVida(position = game.at(0,15), usuario = goku, division = 50)
+		const barraDeEnergia = new BarraDeEnergia(position = game.at(2,15), usuario = goku)
+		const barraDeVidaEnemigo = new BarraDeVida(position = game.at(19,15), usuario = freezer, division = 50)
+		const barraDeEnergiaEnemigo = new BarraDeEnergia(position = game.at(16,15), usuario = freezer)
+		game.addVisual(barraDeVida)
+		game.addVisual(barraDeEnergia)
+		game.addVisual(barraDeFuria)
+		game.addVisual(barraDeVidaEnemigo)
+		game.addVisual(barraDeEnergiaEnemigo)
+	}
+	override method maximoVida() = 500
+}
+
+
 
 
 
