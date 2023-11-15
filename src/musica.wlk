@@ -1,8 +1,5 @@
 import wollok.game.*
 
-class Musica {
-	
-}
 
 object musica{
 	
