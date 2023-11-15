@@ -41,7 +41,7 @@ class BolaDeEnergia {
 		if (usuario.puedeMoverse()){
 			animaciones.disparar(usuario)
 			game.addVisual(self)
-			sonidoKame.iniciar()
+			sonidoAReproducir.iniciar("assets/sonidos/kame.wav")
 			usuario.direccionHaciaLaQueMira().desplazamiento(self)
 			usuario.energia(0.max(usuario.energia() - 10))
 		}
@@ -70,7 +70,7 @@ class BengalaSolar{
 	method usar(){
 		if (usuario.puedeMoverse()){
 			game.addVisual(self)
-			sonidoBengalaSolar.iniciar()
+			sonidoAReproducir.iniciar("assets/sonidos/bengalaSolar.wav")
 			self.aturdir()
 			usuario.energia(0.max(usuario.energia() - 25))
 		}

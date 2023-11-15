@@ -1,5 +1,9 @@
 import wollok.game.*
 
+class Musica {
+	
+}
+
 object musica{
 	
 	const musica=game.sound("assets/sonidos/menu.mp3")
@@ -11,38 +15,13 @@ object musica{
 	}	
 }
 
-object sonidoGolpe{
+object sonidoAReproducir{
 	
-	method iniciar(){
-		const sonido = game.sound("assets/sonidos/golpe.wav")
+	method iniciar(sonidos){
+		const sonido = game.sound(sonidos)
 		sonido.volume(0.5)
 		sonido.play()
 	}
 }
 
-object sonidoBengalaSolar{
-	
-	method iniciar(){
-		const sonido = game.sound("assets/sonidos/bengalaSolar.wav")
-		sonido.volume(0.3)
-		sonido.play()
-	}
-}
 
-object sonidoTransformacion{
-	
-	method iniciar(){
-		const sonido = game.sound("assets/sonidos/transformacion.wav")
-		sonido.volume(0.5)
-		sonido.play()
-	}
-}
-
-object sonidoKame{
-	
-	method iniciar(){
-		const sonido = game.sound("assets/sonidos/kame.wav")
-		sonido.volume(0.3)
-		sonido.play()
-	}
-}

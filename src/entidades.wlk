@@ -87,7 +87,7 @@ class EntidadesVivas{
 		if (self.puedeMoverse()){
             self.atacarHaciaLaDireccionQueMira()
             animaciones.golpear(self)
-            sonidoGolpe.iniciar()
+            sonidoAReproducir.iniciar("assets/sonidos/golpe.wav")
         }
 	}
 	
@@ -124,7 +124,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 		if (self.puedeTransformarse()){
 			estaTransformado = true
 			animaciones.transformacion()
-			sonidoTransformacion.iniciar()
+			sonidoAReproducir.iniciar("assets/sonidos/transformacion.wav")
 			danio *= 2
 		}
 		else{
