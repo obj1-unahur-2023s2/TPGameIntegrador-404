@@ -24,11 +24,11 @@ object frente {
 
 object atras {
 	
-	method miraHacia() = "Atras"
+	method miraHacia() = "atras"
 	
 	method desplazamiento(bolaDeEnergia){
 		
-		game.onTick(350, "movimientoBola", {bolaDeEnergia.moverseAtras()})
+		game.onTick(250, "movimientoBola", {bolaDeEnergia.moverseAtras()})
 	}
 	
 	method destino(entidad) = entidad.position().up(1)
