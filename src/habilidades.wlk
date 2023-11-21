@@ -22,7 +22,7 @@ class BolaDeEnergia {
 	method moverseAtras(){
 		self.hacerDanio()
 		position = position.up(1)
-	}
+}
 	method moverseFrente(){
 		self.hacerDanio()
 		position = position.down(1)

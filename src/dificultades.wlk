@@ -114,7 +114,7 @@ const facil= new ParametrosDificultad(edanio = 10, evida = 500, eVMovimiento = 6
 										   tiempoOnTick = 10000 , capsula = 2,divBarEnemy=50)
 
 const dificil=new ParametrosDificultad(edanio = 20, evida = 1000, eVMovimiento = 400, eVDanio = 800, danio = 20, vida = 100,
-	 tiempoOnTick = 15000, capsula = 1,divBarEnemy=100)
+	 tiempoOnTick = 15000, capsula = 2,divBarEnemy=100)
 
 
 
