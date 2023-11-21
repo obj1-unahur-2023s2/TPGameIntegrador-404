@@ -45,7 +45,6 @@ class EntidadesVivas{
 	method hayUnaCapsulaAdelante() = juego.capsulas().contains(game.getObjectsIn(direccionHaciaLaQueMira.destino(self)).first())
 	
 	method caminarArriba() {
-		//el personaje avanza solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		self.cambiarDireccionHaciaLaQueMira(atras)
 		if ((game.getObjectsIn(position.up(1)).isEmpty() or self.hayUnaCapsulaAdelante() ) and self.puedeMoverse()){
 			position = position.up(1)
@@ -53,7 +52,6 @@ class EntidadesVivas{
 	}
 	
 	method caminarAbajo() {
-		//el personaje retrocede solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		self.cambiarDireccionHaciaLaQueMira(frente)
 		if ((game.getObjectsIn(position.down(1)).isEmpty() or self.hayUnaCapsulaAdelante() )and self.puedeMoverse()){
 			position = position.down(1)
@@ -61,7 +59,6 @@ class EntidadesVivas{
 	}
 	
 	method caminarDerecha() {
-		//el personaje avanza a la derecha solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		self.cambiarDireccionHaciaLaQueMira(derecha)
 		if ((game.getObjectsIn(position.right(1)).isEmpty() or self.hayUnaCapsulaAdelante()) and self.puedeMoverse()){
 			position = position.right(1)
@@ -69,7 +66,6 @@ class EntidadesVivas{
 	}
 	
 	method caminarIzquierda() {
-		//el personaje avanza a la izquierda solo si en la casilla de enfrente no hay nada, si no solo cambia el lugar al que mira
 		self.cambiarDireccionHaciaLaQueMira(izquierda)
 		if ((game.getObjectsIn(position.left(1)).isEmpty() or self.hayUnaCapsulaAdelante()) and self.puedeMoverse()){
 			position = position.left(1)
@@ -79,11 +75,10 @@ class EntidadesVivas{
     method serAturdido(tiempo){
     	estaAturdido=true
     	game.schedule(tiempo,{estaAturdido=false})
-    } //esta funcion tiene inplementado el tiempo, ya que se usara para la habilidad "Bengala Solar" la cual aturde a los enemigos "x" segundos
-    
+    } 
     method morir()
     
-   	method golpear(){ //realiza la animacion de golpe hacia la direccion que mira el personaje
+   	method golpear(){
 		if (self.puedeMoverse()){
             self.atacarHaciaLaDireccionQueMira()
             animaciones.golpear(self)
@@ -91,8 +86,7 @@ class EntidadesVivas{
         }
 	}
 	
-    method usarBolaDeEnergia(){  //dispara una bola de energia que va en linea recta, si choca con el enemigo le hace daño, y si choca con un bostaculo desparece
-		
+    method usarBolaDeEnergia(){  
 		if( energia >= 15){
 			const bola = new BolaDeEnergia(position = direccionHaciaLaQueMira.destino(self), usuario = self)
 			bola.usar()
@@ -100,7 +94,7 @@ class EntidadesVivas{
 		else{ game.say(self,"No tengo suficiente energia")}
 		
 	}
-	method usarBengalaSolar(){  //el personaje lanza una onda de luz que deja aturdido al enemigo, sin poder realizar una accion por un determinado tiempo
+	method usarBengalaSolar(){  
 		if ( energia >= 25){
 			const bengalaSolar = new BengalaSolar(usuario = self)
 			bengalaSolar.usar()
@@ -120,7 +114,7 @@ object goku inherits EntidadesVivas(position = game.center(), vida = 100){
 	
 	method puedeTransformarse() = furia == 100 and not estaTransformado
 	
-	method transformarse(){  // el jugador se transforma y aumenta su daño
+	method transformarse(){  
 		if (self.puedeTransformarse()){
 			estaTransformado = true
 			animaciones.transformacion()
@@ -146,7 +140,7 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
 	
 	override method image() = "assets/freezer/" + direccionHaciaLaQueMira.miraHacia() + accion + ".png"
 	
-	method movimiento(){ //el enemigo se mueve hacia donde esta el jugador
+	method movimiento(){ 
 		
 		if (goku.position().x() > self.position().x() and self.puedeMoverse()){
 			self.caminarDerecha()
@@ -177,12 +171,12 @@ object freezer inherits EntidadesVivas(position = game.at(4,4),vida = 100){
     
     method hayUnObstaculoEnLaDireccionHaciaLaQueMira() = juego.obstaculos().any({obstaculo => direccionHaciaLaQueMira.destino(self) == obstaculo.position()})
     
-	method velocidadDeMovimiento(valor){ //tiempo en el que el enemigo se mueve 1 casilla
+	method velocidadDeMovimiento(valor){ 
 		
 		game.onTick(valor, "movimientoEnemgio",{ self.movimiento() })
 	}
 	
-	method velocidadDeAtaque(valor){ //tiempo en el que el enemigo lanza un ataque
+	method velocidadDeAtaque(valor){
 		
 		game.onTick(valor, "ataqueEnemgio",{ self.golpearBot() })
 	}

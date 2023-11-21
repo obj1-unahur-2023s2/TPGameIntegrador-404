@@ -4,7 +4,7 @@ import direcciones.*
 
 object animaciones{
 	
-	method golpear(entidad){ //animacion de golpe
+	method golpear(entidad){ 
 		
 		entidad.serAturdido(450)
 		entidad.accion("Golpe")
@@ -13,16 +13,16 @@ object animaciones{
 		
 	}
 	
-	method disparar(entidad){ //animacion de lanzar kame
+	method disparar(entidad){ 
 		
 		entidad.serAturdido(450)
 		entidad.accion("Kame")
 		game.schedule(100, {entidad.accion("Kame1")})
-		game.schedule(200, {entidad.accion("Kame2")})							//cambiar a objetos
+		game.schedule(200, {entidad.accion("Kame2")})							
 		game.schedule(400, {entidad.accion("")})
 	}
 	
-	method transformacion(){  //animacion de transformacion
+	method transformacion(){ 
 		goku.serAturdido(580)
 		goku.direccionHaciaLaQueMira(frente)
 		goku.accion("Transformacion")

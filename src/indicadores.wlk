@@ -18,7 +18,6 @@ class BarraDeVida inherits Barra{
 
 class BarraDeEnergia inherits Barra{
 
-//	method position()= game.at(2,15)
 	override method image() = "indicadores/barraDeEnergia"+ calculo.indicarBarra(usuario.energia(), 10) +".png"
 }
 

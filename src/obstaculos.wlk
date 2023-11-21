@@ -35,7 +35,7 @@ class CapsulaEnergia inherits Obstaculo{
 	method image() = "assets/elementos/capsulaEnergia.png"
 	
 	method serAgarrado(entidad){ 
-		entidad.energia( 100.min(entidad.energia() + 75) )
+		entidad.energia( 100.min(entidad.energia() + 25) )
 		game.removeVisual(self)
 		juego.eliminarCapsulaEnergia(self)
 	}

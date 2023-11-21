@@ -80,8 +80,7 @@ class ParametrosDificultad inherits Dificultad{
 		const eVDanio
 		const danio
 		const vida
-		const tiempoOnTickVida
-		const tiempoOnTickEnergia
+		const tiempoOnTick
 		const capsula
 		const divBarEnemy
 		
@@ -93,8 +92,8 @@ class ParametrosDificultad inherits Dificultad{
 		juego.bordesDelMapa()
 		juego.agregarVisuales()
 		juego.configurarTeclas()
-		game.onTick(tiempoOnTickVida, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(capsula) })
-		game.onTick(tiempoOnTickEnergia, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(capsula) })
+		game.onTick((tiempoOnTick + (tiempoOnTick/2)), "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(capsula) })
+		game.onTick(tiempoOnTick , "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(capsula) })
 		configuracion.configurarEnemigo(edanio,evida,eVMovimiento,eVDanio)
 		configuracion.configurarJugador(danio,vida)
 		configuracion.configurarEstadoInicial()
@@ -112,10 +111,10 @@ class ParametrosDificultad inherits Dificultad{
 }
 //DECLARACION DE LOS NIVELES CON DIFERENTES PARAMETROS PARA HACERLO MAS DIFICIL O MAS FACIL!
 const facil= new ParametrosDificultad(edanio = 10, evida = 500, eVMovimiento = 600, eVDanio = 1000, danio = 25, vida = 100,
-										  tiempoOnTickVida = 15000,tiempoOnTickEnergia = 10000 , capsula = 1,divBarEnemy=50)
+										   tiempoOnTick = 10000 , capsula = 2,divBarEnemy=50)
 
 const dificil=new ParametrosDificultad(edanio = 20, evida = 1000, eVMovimiento = 400, eVDanio = 800, danio = 20, vida = 100,
-	tiempoOnTickVida = 20000, tiempoOnTickEnergia = 15000, capsula = 1,divBarEnemy=100)
+	 tiempoOnTick = 15000, capsula = 1,divBarEnemy=100)
 
 
 
@@ -123,7 +122,7 @@ object unoVsUno inherits Dificultad{
 	
 	override method configurar(){
 		super()
-		juego.agregarVisualesParaUnoVsUno()
+		juego.agregarVisuales()
 		juego.configurarTeclasParaUnoVsUno()
 		game.onTick(9000, "GenerarCapsulas", { juego.generarCapsulaVidaSiEstaVacio(3) })
 		game.onTick(5000, "GenerarCapsulas", { juego.generarCapsulaEnergiaSiEstaVacio(3) })

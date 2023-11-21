@@ -58,12 +58,7 @@ object juego{
 		
 	}
 	
-	method agregarVisualesParaUnoVsUno(){
-		game.addVisual(goku)
-		game.addVisual(freezer)
-		obstaculos.forEach({a => game.addVisual(a)})
-		bordes.forEach({b => game.addVisual(b)})
-	}
+	
 	
 	method agregarVisuales(){
 		game.addVisual(goku)
