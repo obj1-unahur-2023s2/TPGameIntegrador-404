@@ -1,8 +1,13 @@
+import juegoManager.*
+import entidades.*
 import wollok.game.*
-import pepita.*
+import musica.*
 
-program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
+program abc {
+	
+	game.cellSize(60)
+	juego.iniciar()
+	musica.iniciar()
 	game.start()
+
 }
