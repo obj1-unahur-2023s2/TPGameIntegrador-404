@@ -30,8 +30,8 @@ class BolaDeEnergia {
 	
 	method hacerDanio(){
 		if ( self.estaSobreUnEnemigo() or self.estaSobreUnObstaculo()){
-			game.removeVisual(self)
 			game.removeTickEvent("movimientoBola")
+			game.removeVisual(self)
 			game.getObjectsIn(position).first().recibirAtaque(usuario.danio() / 2)
 			
 		}
@@ -50,7 +50,7 @@ class BolaDeEnergia {
 	
 	method serAgarrado(entidad){}
 	
-	method estaSobreUnEnemigo() =  game.getObjectsIn(position).first() == usuario.enemigo()
+	method estaSobreUnEnemigo() =  self.position() == usuario.enemigo().position()
 	
 	method estaSobreUnObstaculo() = juego.obstaculos().any( { o => o.position() == self.position()  } )
 }
